@@ -9,6 +9,7 @@ import Ingredients from './components/Ingredients';
 import Nutrients from './components/Nutrients';
 import { Provider } from 'react-redux';
 import appStore from './utils/appStore';
+import RecipePage from './components/RecipePage';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
           <Route path='ingredients' element={<Ingredients/>}/>
           <Route path='nutrients' element={<Nutrients/>}/>
         </Route>
+        <Route path='recipe/:id' element={<RecipePage/>}/>
         <Route path='yourRecipes' element={<YourRecipes/>}/>
         <Route path='yourAccount' element={<YourAccount/>}/>
       </Route>
