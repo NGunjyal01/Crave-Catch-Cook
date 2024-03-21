@@ -29,10 +29,10 @@ const DishName = () => {
         <>
             <div className="flex justify-center mt-[5%]" onKeyDown={(e)=>{if(e.key==="Enter")handleSearch()}}>
                 <input type="text" placeholder="Search Recipes By Dish Name" 
-                className="p-4 rounded-full w-[80%] border-black border-2"
+                className="py-3 px-6 rounded-full w-[80%] border-2 border-gray-500 focus:outline-none focus:border-orange-500 focus:shadow-outline focus:shadow-orange-700 shadow-gray-600 shadow-lg"
                 onChange={(e)=>{handleSearchInput(e.target.value)}} value={searchInput}/>
-                <FaSearch onClick={handleSearch}/>
-                {recipes && <button onClick={handleClearAll}>clear all</button>}
+                <FaSearch className="relative -ml-10 mt-4 cursor-pointer" onClick={handleSearch} size={19}/>
+                {recipes && <button onClick={handleClearAll} className="absolute right-16 mt-3 bg-cyan-50">clear all</button>}
             </div>
             <div className="flex flex-wrap justify-center mt-6">
                 {recipes && recipes.map((recipe)=><RecipeCard recipe={recipe}/>)}
