@@ -10,6 +10,7 @@ import nonVegLogo from "../Non-Veg Logo.png";
 import veganLogo from "../Vegan Logo.png";
 import glutenFreeLogo from "../Gluten Free logo.png";
 import dairyFreeLogo from "../Dairy Free Logo.png";
+import SimilarRecipes from './SimilarRecipes';
 
 const RecipePage = () => {
 
@@ -2234,8 +2235,8 @@ const RecipePage = () => {
             <div className='ml-[10%] mt-10 text-lg font-semibold'>
                 <h1>{"Source Name - " + sourceName}</h1>
                 <h1>Source Url - <a href={sourceUrl}>{sourceUrl}</a></h1>
-                <h1 className='font-semibold text-2xl mt-10'>Similar Recipes</h1> 
             </div>
+            <SimilarRecipes recipeId={recipeId}/>
         </div>
     )
 }

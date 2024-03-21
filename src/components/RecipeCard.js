@@ -15,10 +15,10 @@ const RecipeCard = ({recipe}) => {
     return (
     <div className="bg-orange-100 p-4 m-4 w-[28%] rounded-lg hover:scale-105 transition-transform ease-in-out cursor-pointer"
     onClick={handleRecipeCardClick}>
-        <h1 className="text-xl my-4 flex justify-center">{title}</h1>
+        <h1 className="text-xl mt-4 flex justify-center">{title}</h1>
         <div className="flex space-x-7">
-            <img src={image} alt={title+" image"} className="w-56"/>
-            <ul>
+            <img src={image} alt={title+" image"} className="w-56 h-56 object-contain"/>
+            <ul className="mt-7">
                 <li>{servings} servings</li>
                 <li>{nutrients[0].amount + " " + nutrients[0].unit}</li>
                 {selectedNutrients.map(nutrient => <li>{nutrient.name + " " + nutrient.amount+" "+nutrient.unit}</li>)}
