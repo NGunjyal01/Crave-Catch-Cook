@@ -2134,7 +2134,8 @@ const RecipePage = () => {
         "spoonacularScore": 48.6579704284668,
         "spoonacularSourceUrl": "https://spoonacular.com/chicken-65-637876"
     }
-
+    const info = recipeInfo1.nutrition.nutrients.map(name => name.name).join(",");
+    console.log(info);
     const getRecipeInformation = async()=>{
         const data = await fetch("https://api.spoonacular.com/recipes/" + recipeId + "/information?apiKey="+ API_KEY + "&includeNutrition=true");
         const json = await data.json();

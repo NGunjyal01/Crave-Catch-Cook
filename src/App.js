@@ -11,6 +11,7 @@ import { Provider } from 'react-redux';
 import appStore from './utils/appStore';
 import RecipePage from './components/RecipePage';
 import Favourites from './components/Favourites';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
 
@@ -33,6 +34,7 @@ function App() {
   return (
     <Provider store={appStore}>
       <RouterProvider router={appRouter}/>
+      <Toaster/>
     </Provider>
   );
 }
