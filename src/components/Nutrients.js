@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import {API_KEY} from "../utils/constants";
 import toast from 'react-hot-toast';
-import { wait } from '@testing-library/user-event/dist/utils';
 import RecipeCard from './RecipeCard';
+import DeleteLogo from "../Delete Logo.png";
 
 const Nutrients = () => {
 
@@ -45,6 +45,7 @@ const Nutrients = () => {
     const [addBtn,setAddBtn] = useState(false);
     const [removeBtn,setRemoveBtn] = useState(false);
     const [recipesInfo,setRecipesInfo] = useState(null);
+    const [loading,setLoading] = useState(null);
 
     const handleAddBtn = ()=>{
         setAddBtn(!addBtn);
@@ -105,12 +106,22 @@ const Nutrients = () => {
     }
 
     const getRecipesIdByNutrients = async(searchInput)=>{
+        setLoading(true);
         const data = await fetch("https://api.spoonacular.com/recipes/findByNutrients?apiKey="+ API_KEY+searchInput);
         const json = await data.json();
         getRecipesInfo(json.map(recipe => recipe.id).join(","));
     }
 
-    const handleSearch = ()=>{
+    const getRecipesInfo = async(searchInput)=>{
+        const data = await fetch("https://api.spoonacular.com/recipes/informationBulk?apiKey="+ API_KEY +"&ids="+searchInput+"&includeNutrition=true");
+        const json = await data.json();
+        setRecipesInfo(json);
+        console.log(json);
+        setLoading(false);
+    }
+
+
+    const handleSearch = ()=>{  
         let searchInput ="";
         let isAnyNutrientVisible = false;
         let isAnyInfoEmpty = false;
@@ -145,39 +156,31 @@ const Nutrients = () => {
         setAllNutrients(allNutrients.map(nutrient=>({...nutrient,minVal:null,maxVal:null})))
     }
     
-    const getRecipesInfo = async(searchInput)=>{
-        const data = await fetch("https://api.spoonacular.com/recipes/informationBulk?apiKey="+ API_KEY +"&ids="+searchInput+"&includeNutrition=true");
-        const json = await data.json();
-        setRecipesInfo(json);
-        console.log(json);
-    }
-
     return (
-        <div className='flex flex-col items-center mt-10'>
-            <div className='flex space-x-10'>
-                <h1>Provide The Range of Nutrients you want ( Per Serving )</h1>
+        <div className='mt-10'>
+            <div className='flex justify-center space-x-10 my-10'>
+                <h1 className='text-xl font-bold'>Provide The Range of Nutrients you want ( Per Serving )</h1>
                 <div>
-                    <button className='bg-orange-300 px-4 py-1' onClick={handleAddBtn}>Add</button>
-                    {addBtn && <div className='absolute z-10 flex-col overflow-y-scroll w-32  max-h-96'>
-                        {allNutrients.map(nutrient => <h1 key={nutrient.name} className='my-2 cursor-pointer' onClick={()=>handleAddNutrient(nutrient.name)}>{nutrient.name}</h1>)}
+                    <button className='bg-orange-300 px-4 py-1 rounded-lg' onClick={handleAddBtn}>Add</button>
+                    {addBtn && <div className='absolute z-10 mt-4 -ml-7 bg-gray-200 rounded-lg flex-col overflow-y-scroll scrollbar-hide w-32  max-h-96'>
+                        {allNutrients.map(nutrient => <h1 key={nutrient.name} className='flex justify-center my-2 cursor-pointer' onClick={()=>handleAddNutrient(nutrient.name)}>{nutrient.name}</h1>)}
                     </div>}
                 </div>
-                <button className='bg-orange-300 px-4 py-1' onClick={handleRemoveBtn}>Remove</button>
-                <button className='bg-orange-300 px-4 py-1' onClick={handleSearch}>Search</button>
+                <button className='bg-orange-300 px-4 py-1 rounded-lg' onClick={handleRemoveBtn}>Remove</button>
+                <button className='bg-orange-300 px-4 py-1 rounded-lg' onClick={handleSearch}>Search</button>
                 {/* <button className='bg-orange-300 px-4 py-1' onClick={handleClearAll}>Clear All</button> */}
             </div>
-            {!recipesInfo && <div className=''>
-                {allNutrients.map(nutrient => nutrient.isVisible && <div className='flex space-x-10 my-4'>
-                    <h1>{nutrient.name}</h1>
-                    <input type='number' placeholder='min' onChange={(e)=>handleMinValChange(e.target.value,nutrient.name)} value={nutrient.minVal} className='bg-gray-200 w-20'/>
-                    <input type='number' placeholder='max' onChange={(e)=>handleMaxValChange(e.target.value,nutrient.name)} value={nutrient.maxVal} className='bg-gray-200 w-20'/>
-                    {removeBtn && <h1 onClick={()=>{handleRemoveNutrient(nutrient.name)}} className='cursor-pointer'>delete</h1>}
+            {!recipesInfo && <div className='absolute ml-[35%]'>
+                {allNutrients.map(nutrient => nutrient.isVisible && <div className='flex my-4'>
+                    <h1 className='text-lg'>{nutrient.name}</h1>
+                    <input type='number' placeholder='min' onChange={(e)=>handleMinValChange(e.target.value,nutrient.name)} value={nutrient.minVal} className='bg-gray-200 w-20 absolute ml-28'/>
+                    <input type='number' placeholder='max' onChange={(e)=>handleMaxValChange(e.target.value,nutrient.name)} value={nutrient.maxVal} className='bg-gray-200 w-20 absolute ml-52'/>
+                    {removeBtn && <img src={DeleteLogo} alt='delte logo' onClick={()=>{handleRemoveNutrient(nutrient.name)}} className='w-5 cursor-pointer absolute ml-[19rem]'/>}
                 </div>)}
             </div>}
-            <div className='flex flex-wrap'>
+            {loading ? <div>loading</div> : <div className='flex flex-wrap'>
                 {recipesInfo && recipesInfo.map(recipe => <RecipeCard recipe={recipe}/>)}
-                {console.log("hello")}
-            </div>
+            </div>}
         </div>
     )
 }

@@ -13,7 +13,7 @@ const RecipeCard = ({recipe}) => {
     }
 
     return (
-    <div className="bg-orange-100 p-4 m-4 w-[28%] rounded-lg hover:scale-105 transition-transform ease-in-out cursor-pointer"
+    <div className="bg-orange-100 p-4 m-4 w-[28%] h-80 rounded-lg hover:scale-105 transition-transform ease-in-out cursor-pointer"
     onClick={handleRecipeCardClick}>
         <h1 className="text-xl mt-4 flex justify-center">{title}</h1>
         <div className="flex space-x-7">

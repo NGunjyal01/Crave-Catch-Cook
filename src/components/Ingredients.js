@@ -2,16 +2,19 @@ import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { API_KEY } from "../utils/constants";
 import RecipeCard from "./RecipeCard";
+import Shimmer from "./Shimmer";
 
 const Ingredients = () => {
     const [searchInput,setSearchInput] = useState(null); 
     const [recipesId,setRecipesId] = useState(null);
     const [recipesInfo,setRecipesInfo] = useState(null);
+    const [loading,setLoading] = useState(null);
 
     const handleSearchInput = (value)=>{
         setSearchInput(value);
     }
     const getRecipesByIngredients = async()=>{
+        setLoading(true);
         const data = await fetch("https://api.spoonacular.com/recipes/findByIngredients?apiKey="+API_KEY+"&ingredients="+searchInput+"&number=20&ignorePantry=true");
         const json = await data.json();
         const getRecipesId =  json.map(recipe => recipe.id).join(",");
@@ -22,9 +25,10 @@ const Ingredients = () => {
         const data = await fetch("https://api.spoonacular.com/recipes/informationBulk?apiKey=" + API_KEY + "&ids=" + recipesId  +"&includeNutrition=true");
         const json = await data.json();
         setRecipesInfo(json);
+        setLoading(false);
     }
 
-    const handleSearch = ()=>{
+    const handleSearch = ()=>{  
         getRecipesByIngredients();
         getRecipesInfo();
     }
@@ -37,9 +41,9 @@ const Ingredients = () => {
                     onChange={(e)=>{handleSearchInput(e.target.value)}} value={searchInput}/>
                 <FaSearch className="relative -ml-10 mt-4 cursor-pointer" onClick={handleSearch} size={19}/>
             </div>
-            <div className="flex flex-wrap justify-center mt-10">
+            {loading ? <Shimmer/> : <div className="flex flex-wrap justify-center mt-10">
                 {recipesInfo && recipesInfo.map(recipe => <RecipeCard recipe={recipe}/>)}
-            </div>
+            </div>}
         </>
     )
 }

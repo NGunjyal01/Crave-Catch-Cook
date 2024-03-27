@@ -2237,7 +2237,7 @@ const RecipePage = () => {
                 <h1>{"Source Name - " + sourceName}</h1>
                 <h1>Source Url - <a href={sourceUrl}>{sourceUrl}</a></h1>
             </div>
-            <SimilarRecipes recipeId={recipeId}/>
+            {/* <SimilarRecipes recipeId={recipeId}/> */}
         </div>
     )
 }
