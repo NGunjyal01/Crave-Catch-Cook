@@ -3,6 +3,7 @@ import {API_KEY} from "../utils/constants";
 import toast from 'react-hot-toast';
 import RecipeCard from './RecipeCard';
 import DeleteLogo from "../Delete Logo.png";
+import Shimmer from './Shimmer';
 
 const Nutrients = () => {
 
@@ -109,6 +110,7 @@ const Nutrients = () => {
         setLoading(true);
         const data = await fetch("https://api.spoonacular.com/recipes/findByNutrients?apiKey="+ API_KEY+searchInput);
         const json = await data.json();
+        console.log(json);
         getRecipesInfo(json.map(recipe => recipe.id).join(","));
     }
 
@@ -178,7 +180,7 @@ const Nutrients = () => {
                     {removeBtn && <img src={DeleteLogo} alt='delte logo' onClick={()=>{handleRemoveNutrient(nutrient.name)}} className='w-5 cursor-pointer absolute ml-[19rem]'/>}
                 </div>)}
             </div>}
-            {loading ? <div>loading</div> : <div className='flex flex-wrap'>
+            {loading ? <Shimmer/> : <div className='flex flex-wrap justify-center'>
                 {recipesInfo && recipesInfo.map(recipe => <RecipeCard recipe={recipe}/>)}
             </div>}
         </div>

@@ -1,15 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { API_KEY } from "../utils/constants";
 import RecipeCard from "./RecipeCard";
 import Shimmer from "./Shimmer";
 import Filter from "./Filter";
 
+
 const DishName = () => {
     const [searchInput,setSearchInput] = useState(null); 
     const [recipes,setRecipes] = useState(null);
     const [loading,setLoading] = useState(null);
     const [isFilterModalVisible,setIsFilterModalVisible] = useState(false);
+
+    useEffect(() => {
+        if (isFilterModalVisible) {
+            document.body.style.overflow = 'hidden'; // Disable scrolling when modal is open
+        } else {
+            document.body.style.overflow = ''; // Enable scrolling when modal is closed
+        }
+
+        return () => {
+            document.body.style.overflow = ''; // Reset overflow style when component unmounts
+        };
+    }, [isFilterModalVisible]);
 
     const handleSearchInput = (value)=>{
         setSearchInput(value);
@@ -38,9 +51,9 @@ const DishName = () => {
                 onChange={(e)=>{handleSearchInput(e.target.value)}} value={searchInput}/>
                 <FaSearch className="relative -ml-10 mt-4 cursor-pointer" onClick={handleSearch} size={19}/>
                 {recipes && <button onClick={handleClearAllBtn} className="absolute right-16 mt-3 bg-cyan-50">clear all</button>}
-                {<button onClick={handleToggleFilterBtn} className="absolute right-16 mt-3 bg-cyan-50">filter</button>}
+                { <button onClick={handleToggleFilterBtn} className="absolute right-4 mt-3 bg-cyan-50">filter</button>}
             </div>
-            {isFilterModalVisible && <Filter onClose={handleToggleFilterBtn}/>}
+            {isFilterModalVisible && <Filter setIsFilterModalVisible={setIsFilterModalVisible} searchInput={searchInput} setLoading={setLoading} setRecipes={setRecipes}/>}
             {loading?<Shimmer/> : <div className="flex flex-wrap justify-center mt-6">
                 {recipes && recipes.map((recipe)=><RecipeCard recipe={recipe}/>)}
             </div>}

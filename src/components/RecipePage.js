@@ -2209,8 +2209,8 @@ const RecipePage = () => {
             <div className='ml-[10%] mt-20'>
                 <p dangerouslySetInnerHTML={{ __html: summary }} className='w-[90%]'></p>
                 <h1 className='text-2xl font-semibold mt-10 mb-4'>Ingredients</h1>
-                <div className='flex flex-wrap space-x-10'>
-                    {extendedIngredients.map(ingredient =><div className='flex flex-col items-center'>
+                <div className='flex flex-wrap'>
+                    {extendedIngredients.map(ingredient =><div className='flex flex-col items-center mr-10 mt-4'>
                             <h1 className='mb-2'>{ingredient.amount +" " +ingredient.unit}</h1>
                             <img src={Ingredients_IMG_CDN+ingredient.image} alt={ingredient.name + " img"} className='w-28 h-28 object-contain'/>
                             <h1 className='my-4'>{ingredient.name}</h1>
