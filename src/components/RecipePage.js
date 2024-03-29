@@ -17,8 +17,8 @@ import ProgressBar from "@ramonak/react-progress-bar";
 const RecipePage = () => {
 
     const recipeId = useParams().id;
-    // const [recipeInfo,setRecipeInfo] = useState(null);
-    const recipeInfo ={
+    const [recipeInfo,setRecipeInfo] = useState(null);
+    const recipeInfo1 ={
         "vegetarian": false,
         "vegan": false,
         "glutenFree": true,
@@ -2136,17 +2136,17 @@ const RecipePage = () => {
         "spoonacularScore": 48.6579704284668,
         "spoonacularSourceUrl": "https://spoonacular.com/chicken-65-637876"
     }
-    // const info = recipeInfo1.nutrition.nutrients.map(name => name.name).join(",");
-    // console.log(info);
-    // const getRecipeInformation = async()=>{
-    //     const data = await fetch("https://api.spoonacular.com/recipes/" + recipeId + "/information?apiKey="+ API_KEY + "&includeNutrition=true");
-    //     const json = await data.json();
-    //     setRecipeInfo(json);
-    // }
+    const info = recipeInfo1.nutrition.nutrients.map(name => name.name).join(",");
+    console.log(info);
+    const getRecipeInformation = async()=>{
+        const data = await fetch("https://api.spoonacular.com/recipes/" + recipeId + "/information?apiKey="+ API_KEY + "&includeNutrition=true");
+        const json = await data.json();
+        setRecipeInfo(json);
+    }
 
-    // useEffect(()=>{
-    //     getRecipeInformation();
-    // },[recipeId]);
+    useEffect(()=>{
+        getRecipeInformation();
+    },[recipeId]);
     if(!recipeInfo) return null;
     const {vegetarain,vegan,glutenFree,dairyFree,sourceName,pricePerServing,extendedIngredients,title,servings,readyInMinutes,sourceUrl,image,nutrition,summary,analyzedInstructions,spoonacularSourceUrl} = recipeInfo;
     const {nutrients} = nutrition;

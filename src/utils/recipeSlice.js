@@ -3,11 +3,15 @@ import { createSlice } from '@reduxjs/toolkit';
 const recipeSlice = createSlice({
     name:"recipes",
     initialState:{
+        randomRecipes: null,
         dishName: null,
         ingredients: null,
         nutrients: null,
     },
     reducers:{
+        addRandomRecipes: (state,action)=>{
+            state.randomRecipes = action.payload;
+        },
         addRecipeByDishName: (state,action) =>{
             state.dishName = action.payload;  
         },
@@ -29,6 +33,6 @@ const recipeSlice = createSlice({
     },
 });
 
-export const {addRecipeByDishName,removeRecipeByDishName,addRecipeByIngredients,removeRecipeByIngredients,addRecipeByNutrients,removeRecipeByNutrients} = recipeSlice.actions;
+export const { addRandomRecipes,addRecipeByDishName,removeRecipeByDishName,addRecipeByIngredients,removeRecipeByIngredients,addRecipeByNutrients,removeRecipeByNutrients} = recipeSlice.actions;
 
 export default recipeSlice.reducer;

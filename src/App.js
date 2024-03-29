@@ -12,14 +12,16 @@ import appStore from './utils/appStore';
 import RecipePage from './components/RecipePage';
 import Favourites from './components/Favourites';
 import { Toaster } from 'react-hot-toast';
+import Recipes from './components/Recipes';
 
 function App() {
 
   const appRouter = createBrowserRouter(
     createRoutesFromElements(
       <Route path='/' element={<Body/>}>
-        <Route path='' element={<Home/>}>
-          <Route path='' element={<DishName/>}/>
+        <Route path='' element={<Home/>}/>
+        <Route path='/recipes' element={<Recipes/>}>
+          <Route path='dishName' element={<DishName/>}/>
           <Route path='ingredients' element={<Ingredients/>}/>
           <Route path='nutrients' element={<Nutrients/>}/>
         </Route>
