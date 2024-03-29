@@ -78,6 +78,16 @@ const Filter = ({ searchInput,setIsFilterModalVisible,setLoading,setRecipes }) =
         }
     }
 
+    const handleClearFilter = ()=>{
+        setShowSortOptions(false);
+        setSortOption("Select");
+        setSelectedSort(sort);
+        setSelectedMealType(mealType);
+        setSelectedIntolerances(intolerances);
+        setSelectedCuisines(cuisines);
+        setSortOrder(sortDirection);
+    }
+
     const handleSearch = async()=>{
         let filterInput="";
         selectedSort.map(type=>{
@@ -115,52 +125,53 @@ const Filter = ({ searchInput,setIsFilterModalVisible,setLoading,setRecipes }) =
     }
 
     return (
-    <div className="absolute top-0 z-50 flex justify-center w-full h-full backdrop-blur-sm">
-        <div className="w-[70%] bg-blue-50 p-5">
-            <div>
+    <div className="absolute top-0 z-50 flex justify-center w-full h-full backdrop-blur-sm pt-10">
+        <div className="w-[60%] bg-blue-50 p-5 rounded-lg">
+            <div className="my-2">
                 <div className="flex">
-                    <h1 className="mr-4">Sort</h1>
+                    <h1 className="mr-4 text-xl font-bold">Sort</h1>
                     <button className="bg-white flex w-32 sm:w-60 rounded-lg" onClick={handleSelectClick}>
                         <h1 className="mx-auto my-auto text-xs sm:text-base">{sortOption}</h1> 
                         <FaChevronDown className="DropDownIcon mr-1 my-2"/>
                     </button>
-                    {showSortOptions && <div className="bg-white rounded-lg w-60 max-h-60 flex flex-col items-center absolute overflow-y-scroll scrollbar-hide mt-1">
-                    {sort.map(option => <h1 key={option.name} className="my-1" onClick={()=>{handleSortOptionClick(option.name)}}>{option.name}</h1>)}    
+                    {showSortOptions && <div className="bg-white rounded-lg w-60 max-h-60 ml-14 mt-9 flex flex-col items-center absolute overflow-y-scroll scrollbar-hide">
+                    {sort.map(option => <h1 key={option.name} className="my-1 cursor-pointer" onClick={()=>{handleSortOptionClick(option.name)}}>{option.name}</h1>)}    
                     </div>}
                 </div>
-                <div className="flex my-2">
-                    <h1 className="mr-4">Sorting Order</h1>
+                <div className="flex my-4">
+                    <h1 className="mr-4 text-xl font-bold">Sorting Order</h1>
                     <button onClick={handleSortOrder} className="bg-white px-5 py-1 rounded-lg">{sortOrder.asc?"Low To High":"High To Low"}</button>
                 </div>
             </div>
-            <div>
-                <h1>Meal Type</h1>
-                <div className="flex flex-wrap">
-                    {selectedMealType.map(type =><div key={type.name} className="flex space-x-2 mr-4">
-                        <div className={`w-4 h-4 ${type.want?'bg-blue-500':'bg-white'}`} onClick={()=>{handleMealTypeClick(type.name)}}/>
+            <div className="mt-4">
+                <h1 className="text-xl font-bold">Meal Type</h1>
+                <div className="grid grid-cols-12 mt-2">
+                    {selectedMealType.map(type =><div key={type.name} className="col-span-2 flex space-x-2 mt-1">
+                        <div className={`w-4 h-4 rounded-sm mt-[.3rem] ${type.want?'bg-blue-500':'bg-white'}`} onClick={()=>{handleMealTypeClick(type.name)}}/>
                         <h1>{type.name}</h1></div>)}
                 </div>
             </div>
-            <div>
-                <h1>Intolerances</h1>
-                <div className="flex flex-wrap space-x-4">
-                    {selectedIntolerances.map(type => <div key={type.name} className="flex space-x-2">
-                    <div className={`w-4 h-4 ${type.have?'bg-blue-500':'bg-white'}`} onClick={()=>{handleIntolerancesClick(type.name)}}/>
+            <div className="mt-4">
+                <h1 className="text-xl font-bold">Intolerances</h1>
+                <div className="grid grid-cols-12 mt-2">
+                    {selectedIntolerances.map(type => <div key={type.name} className="col-span-2 flex space-x-2 mt-1">
+                    <div className={`w-4 h-4 rounded-sm mt-[.3rem] ${type.have?'bg-blue-500':'bg-white'}`} onClick={()=>{handleIntolerancesClick(type.name)}}/>
                     <h1>{type.name}</h1>
                     </div>)}
                 </div>
             </div>
-            <div>
-                <h1>Cuisines</h1>
-                <div className="flex flex-wrap">
-                    {selectedCuisines.map(type => <div className="flex space-x-2 mr-4">
-                        <div className={`w-4 h-4 rounded-full ${type.want?'bg-blue-500':'bg-white'}`} onClick={()=>{handleCuisinesClick(type.name)}}/>
+            <div className="mt-4">
+                <h1 className="text-xl font-bold">Cuisines</h1>
+                <div className="grid grid-cols-12 mt-2">
+                    {selectedCuisines.map(type => <div className="col-span-3 flex space-x-2 mt-1">
+                        <div className={`w-4 h-4 rounded-sm mt-[.3rem] ${type.want?'bg-blue-500':'bg-white'}`} onClick={()=>{handleCuisinesClick(type.name)}}/>
                         <h1>{type.name}</h1>
                     </div>)}
                 </div>
             </div>
-            <button onClick={handleFilterModalClose}>onclose</button>
+            <button onClick={handleFilterModalClose} className="absolute top-14 right-[21%] text-xl bg-white px-2 rounded-full">X</button>
             <button onClick={handleSearch}>Apply Changes</button>
+            <button onClick={handleClearFilter}>Clear Filter</button>
         </div>
     </div>
     )

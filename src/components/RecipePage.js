@@ -11,12 +11,14 @@ import veganLogo from "../Vegan Logo.png";
 import glutenFreeLogo from "../Gluten Free logo.png";
 import dairyFreeLogo from "../Dairy Free Logo.png";
 import SimilarRecipes from './SimilarRecipes';
+import notSavedLogo from "../Not Saved Logo.png";
+import ProgressBar from "@ramonak/react-progress-bar";
 
 const RecipePage = () => {
 
     const recipeId = useParams().id;
-    const [recipeInfo,setRecipeInfo] = useState(null);
-    const recipeInfo1 ={
+    // const [recipeInfo,setRecipeInfo] = useState(null);
+    const recipeInfo ={
         "vegetarian": false,
         "vegan": false,
         "glutenFree": true,
@@ -2134,61 +2136,69 @@ const RecipePage = () => {
         "spoonacularScore": 48.6579704284668,
         "spoonacularSourceUrl": "https://spoonacular.com/chicken-65-637876"
     }
-    const info = recipeInfo1.nutrition.nutrients.map(name => name.name).join(",");
-    console.log(info);
-    const getRecipeInformation = async()=>{
-        const data = await fetch("https://api.spoonacular.com/recipes/" + recipeId + "/information?apiKey="+ API_KEY + "&includeNutrition=true");
-        const json = await data.json();
-        setRecipeInfo(json);
-    }
+    // const info = recipeInfo1.nutrition.nutrients.map(name => name.name).join(",");
+    // console.log(info);
+    // const getRecipeInformation = async()=>{
+    //     const data = await fetch("https://api.spoonacular.com/recipes/" + recipeId + "/information?apiKey="+ API_KEY + "&includeNutrition=true");
+    //     const json = await data.json();
+    //     setRecipeInfo(json);
+    // }
 
-    useEffect(()=>{
-        getRecipeInformation();
-    },[recipeId]);
+    // useEffect(()=>{
+    //     getRecipeInformation();
+    // },[recipeId]);
     if(!recipeInfo) return null;
     const {vegetarain,vegan,glutenFree,dairyFree,sourceName,pricePerServing,extendedIngredients,title,servings,readyInMinutes,sourceUrl,image,nutrition,summary,analyzedInstructions,spoonacularSourceUrl} = recipeInfo;
     const {nutrients} = nutrition;
+    console.log(nutrients);
     const steps = analyzedInstructions[0].steps;
 
     return (
         <div className='px-10 mt-[10%]'>
             {/* Section 1 */}
-            <h1 className='flex justify-center mb-5 text-4xl font-bold'>{title}</h1>
-            <div className='flex space-x-24 justify-center mt-10'>
-                <img src={image} alt={title+" img"} className='w-[42%] shadow-lg shadow-gray-700 rounded-lg hover:scale-105 transition-transform ease-in-out'/>
-                <div className='flex flex-col space-y-4'>
-                    <div className='flex space-x-4 bg-gray-100 px-10 py-2 rounded-lg shadow-sm shadow-gray-700'>
-                        <BiSolidDish size={40}/>
-                        <h1 className=''>{servings + " servings"}</h1>
+            <div className='flex justify-center mb-5 text-4xl font-bold space-x-5'>
+                <h1>{title}</h1>
+                <img src={notSavedLogo} alt='not saved logo' className='w-10 mt-1'/>
+            </div>
+            <div className='flex mt-10'>
+                <img src={image} alt={title+" img"} className='ml-40 w-[42%] shadow-lg shadow-gray-700 rounded-lg hover:scale-105 transition-transform ease-in-out'/>
+                <div className='flex ml-14'>
+                    <div className='flex flex-col space-y-5 mr-4'>
+                        <div className='flex space-x-4 bg-gray-100 px-10 py-2 rounded-lg shadow-sm shadow-gray-700'>
+                            <BiSolidDish size={40}/>
+                            <h1 className=''>{servings + " servings"}</h1>
+                        </div>
+                        <div className='flex space-x-4 bg-gray-100 px-10 py-2 rounded-lg shadow-sm shadow-gray-700'>
+                            <img src={caloriesLogo} alt='calories img' className='w-10'/>
+                            <h1>126kcal</h1>
+                        </div>
+                        <div className='flex space-x-4 bg-gray-100 px-10 py-2 rounded-lg shadow-sm shadow-gray-700'>
+                            <IoMdAlarm size={40}/>
+                            <h1>{"Prepation Time "+readyInMinutes+"min"}</h1>
+                        </div>
+                        <div className='flex space-x-4 bg-gray-100 px-10 py-2 rounded-lg shadow-sm shadow-gray-700'>
+                            <AiFillDollarCircle size={40}/>
+                            <h1>{"$"+pricePerServing + " per Serving"}</h1>
+                        </div>
+                        <div className='flex space-x-4 bg-gray-100 px-10 py-2 rounded-lg shadow-sm shadow-gray-700'>
+                            <img src={vegetarain ? vegLogo : nonVegLogo} className='w-10'/>
+                            <h1>{vegetarain?"Vegetarain":"Non-Vegetarain"}</h1>
+                        </div>
                     </div>
-                    <div className='flex space-x-4 bg-gray-100 px-10 py-2 rounded-lg shadow-sm shadow-gray-700'>
-                        <img src={caloriesLogo} alt='calories img' className='w-12'/>
-                        <h1>126kcal</h1>
+                    <div className='flex flex-col space-y-5'>
+                        {vegan && <div className='flex space-x-4 bg-gray-100 px-10 py-2 rounded-lg shadow-sm shadow-gray-700'>
+                            <img src={veganLogo} alt='vegan logo' className='w-10'/>
+                            <h1>Vegan</h1>
+                        </div>}
+                        {glutenFree && <div className='flex space-x-4 bg-gray-100 px-16 py-2 rounded-lg shadow-sm shadow-gray-700'>
+                            <img src={glutenFreeLogo} alt='gluten free logo' className='w-10'/>
+                            <h1>Gluten Free</h1>    
+                        </div>}
+                        {dairyFree && <div className='flex space-x-4 bg-gray-100 px-10 py-2 rounded-lg shadow-sm shadow-gray-700'>
+                            <img src={dairyFreeLogo} alt='dairy free logo' className='w-10'/>
+                            <h1>Dairy Free</h1>
+                        </div>}
                     </div>
-                    <div className='flex space-x-4 bg-gray-100 px-10 py-2 rounded-lg shadow-sm shadow-gray-700'>
-                        <IoMdAlarm size={40}/>
-                        <h1>{"Prepation Time "+readyInMinutes+"min"}</h1>
-                    </div>
-                    <div className='flex space-x-4 bg-gray-100 px-10 py-2 rounded-lg shadow-sm shadow-gray-700'>
-                        <AiFillDollarCircle size={40}/>
-                        <h1>{"$"+pricePerServing + " per Serving"}</h1>
-                    </div>
-                    <div className='flex space-x-4 bg-gray-100 px-10 py-2 rounded-lg shadow-sm shadow-gray-700'>
-                        <img src={vegetarain ? vegLogo : nonVegLogo} className='w-12'/>
-                        <h1>{vegetarain?"Vegetarain":"Non-Vegetarain"}</h1>
-                    </div>
-                    {vegan && <div className='flex space-x-4 bg-gray-100 px-10 py-2 rounded-lg shadow-sm shadow-gray-700'>
-                        <img src={veganLogo} alt='vegan logo' className='w-12'/>
-                        <h1>Vegan</h1>
-                    </div>}
-                    {glutenFree && <div className='flex space-x-4 bg-gray-100 px-10 py-2 rounded-lg shadow-sm shadow-gray-700'>
-                        <img src={glutenFreeLogo} alt='gluten free logo' className='w-12'/>
-                        <h1>Gluten Free</h1>    
-                    </div>}
-                    {dairyFree && <div className='flex space-x-4 bg-gray-100 px-10 py-2 rounded-lg shadow-sm shadow-gray-700'>
-                        <img src={dairyFreeLogo} alt='dairy free logo' className='w-12'/>
-                        <h1>Dairy Free</h1>
-                    </div>}
                 </div>
             </div>
             {/* Section 2 */}
@@ -2222,15 +2232,22 @@ const RecipePage = () => {
                 <h1 className='text-2xl font-semibold mb-4'>{"Analyzed Instructions ( Preparation Time - " + readyInMinutes + "min )"}</h1>
                 <ul className='list-decimal text-lg'>
                     {steps.map(step=> <div className='space-y-2 mt-4'>
-                            <li>{step.step}</li>
-                            <h1 className='ml-7'><span className='font-semibold'>Ingredients</span> - {step.ingredients.map(ingredient => ingredient.name).join(", ")}</h1>
-                            {step.equipment.length!==0 && <h1 className='ml-7'><span className='font-semibold'>Equipments</span> - {step.equipment.map(equipment => equipment.name).join(", ")}</h1>}
-                        </div>)}
+                        <li>{step.step}</li>
+                        {step.ingredients.length!==0 && <h1 className='ml-7'><span className='font-semibold'>Ingredients</span> - {step.ingredients.map(ingredient => ingredient.name).join(", ")}</h1>}
+                        {step.equipment.length!==0 && <h1 className='ml-7'><span className='font-semibold'>Equipments</span> - {step.equipment.map(equipment => equipment.name).join(", ")}</h1>}
+                    </div>)}
                 </ul>
             </div>
             {/* Section 4 */}
             <div className='ml-[10%] mt-10'>
                 <h1 className='text-2xl font-semibold'>Nutritional Information</h1>
+                <div className='mt-4 ml-2'>
+                    {nutrients.map(nutrient => <div className='flex my-3'>
+                        <h1>{nutrient.name}</h1>
+                        <h1 className='absolute ml-40'>{nutrient.amount + nutrient.unit}</h1>
+                        <progress value={nutrient.percentOfDailyNeeds} className='absolute ml-72 mt-1' max={100}/>
+                    </div>)}
+                </div>
             </div>
             {/* Section 5 */}
             <div className='ml-[10%] mt-10 text-lg font-semibold'>

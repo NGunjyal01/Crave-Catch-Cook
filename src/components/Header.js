@@ -7,7 +7,6 @@ const Header = () => {
         <div className="flex flex-row space-x-4 mr-7 text-lg ">
             <NavLink to={"/"}>Home</NavLink>
             <NavLink to={"/favourites"}>Favourites</NavLink>
-            <NavLink to={"/yourRecipes"}>Your Recipes</NavLink>
             <NavLink to={"/yourAccount"}>Your Account</NavLink>
         </div>
     </div>
