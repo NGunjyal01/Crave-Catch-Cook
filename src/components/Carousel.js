@@ -24,11 +24,11 @@ const Carousel = () => {
     if(!randomRecipes)  return null;
     return (
         <div className="mt-[10%] group ">
-            <div className="hidden group-hover:block absolute top-[50%] left-4 cursor-pointer">
+            <div className="hidden group-hover:block absolute top-[55%] left-4 cursor-pointer">
                 <BsChevronCompactLeft size={35} onClick={prevSlide}/>
             </div>
             <CarouselItem recipe={randomRecipes[currentIndex]}/>
-            <div className="hidden group-hover:block absolute top-[50%] right-4 cursor-pointer">
+            <div className="hidden group-hover:block absolute top-[55%] right-4 cursor-pointer">
                 <BsChevronCompactRight size={35} onClick={nextSlide}/>
             </div>
         </div>

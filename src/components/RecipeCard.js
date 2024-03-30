@@ -1,8 +1,12 @@
+import { BiSolidDish } from "react-icons/bi";
+import { FaThumbsUp } from "react-icons/fa";
+import { IoMdAlarm } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
 
 const RecipeCard = ({recipe}) => {
-    const {vegetarain,vegan,glutenFree,dairyFree,id,title,servings,readyInMinutes,image,nutrition} = recipe;
+
+    const {vegetarain,vegan,glutenFree,dairyFree,id,title,servings,readyInMinutes,aggregateLikes,image,nutrition} = recipe;
     const {nutrients} = nutrition;
     const selectedNutrients = nutrients.filter(nutrient => ["Protein","Fat","Sugar"].includes(nutrient.name));
 
@@ -13,19 +17,32 @@ const RecipeCard = ({recipe}) => {
     }
 
     return (
-    <div className="bg-orange-100 p-4 m-4 w-[28%] h-80 rounded-lg hover:scale-105 transition-transform ease-in-out cursor-pointer"
+    // <div className="bg-orange-100 p-4 m-4 w-[28%] h-80 rounded-lg hover:scale-105 transition-transform ease-in-out cursor-pointer"
+    // onClick={handleRecipeCardClick}>
+    //     <h1 className="text-xl mt-4 flex justify-center">{title}</h1>
+    //     <div className="flex space-x-7">
+    //         <img src={image} alt={title+" image"} className="w-56 h-56 object-contain"/>
+    //         <ul className="mt-7">
+    //             <li>{servings} servings</li>
+    //             <li>{nutrients[0].amount + " " + nutrients[0].unit}</li>
+    //             {selectedNutrients.map(nutrient => <li>{nutrient.name + " " + nutrient.amount+" "+nutrient.unit}</li>)}
+    //             <li>{"Carbs " + nutrients[3].amount+" "+nutrients[3].unit}</li>
+    //             <li>{"Prep Time " + readyInMinutes +" mins"}</li>
+    //         </ul>
+    //     </div>
+    // </div>
+    <div className="bg-[#ACE2E1] m-4 w-[28%] h-[30rem] rounded-[2.5rem] hover:scale-105 transition-transform ease-in-out cursor-pointer"
     onClick={handleRecipeCardClick}>
-        <h1 className="text-xl mt-4 flex justify-center">{title}</h1>
-        <div className="flex space-x-7">
-            <img src={image} alt={title+" image"} className="w-56 h-56 object-contain"/>
-            <ul className="mt-7">
-                <li>{servings} servings</li>
-                <li>{nutrients[0].amount + " " + nutrients[0].unit}</li>
-                {selectedNutrients.map(nutrient => <li>{nutrient.name + " " + nutrient.amount+" "+nutrient.unit}</li>)}
-                <li>{"Carbs " + nutrients[3].amount+" "+nutrients[3].unit}</li>
-                <li>{"Prep Time " + readyInMinutes +" mins"}</li>
-            </ul>
-        </div>
+        <img src={image} alt={title+" image"} className="w-full rounded-t-[2.5rem]"/>
+        <h1 className="text-lg font-bold mt-3 ml-4 flex justify-center">{title}</h1>
+        <ul className="mt-4 ml-12  grid grid-cols-3 font-medium">
+            <li className="col-span-1 my-1 flex"><BiSolidDish size={20} className="mt-1 mr-1"/>{servings} servings</li>
+            <li className="col-span-1 my-1 flex"><IoMdAlarm size={20} className="mt-1 mr-1"/>{readyInMinutes +"mins"}</li>
+            <li className="col-span-1 my-1 flex"><FaThumbsUp size={15} className="mt-1 mr-1"/>{aggregateLikes+" likes"}</li>
+            <li className="col-span-1 my-1">{"Carbs " + nutrients[3].amount+" "+nutrients[3].unit}</li>
+            <li className="col-span-1 my-1">{nutrients[0].amount + " " + nutrients[0].unit}</li>
+            {selectedNutrients.map(nutrient => <li className="col-span-1 my-1">{nutrient.name + " " + nutrient.amount+" "+nutrient.unit}</li>)}
+        </ul>
     </div>
     )
 }

@@ -1,5 +1,6 @@
 import useRandomRecipes from "../hooks/useRandomRecipes";
 import Carousel from "./Carousel";
+import MainContainer from "./MainContainer";
 
 const Home = () => {
 
@@ -8,6 +9,7 @@ const Home = () => {
     return (
         <div>
             <Carousel/>
+            <MainContainer/>
         </div>
     )
 }
