@@ -9,7 +9,6 @@ const Body = () => {
             <Header/>
             <Outlet/>
             <ScrollRestoration/>
-            {/* <Footer/> */}
         </>
     )
 }

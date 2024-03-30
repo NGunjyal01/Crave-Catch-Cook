@@ -37,7 +37,7 @@ const Ingredients = () => {
         <>
             <div className="flex justify-center mt-[5%]" onKeyDown={(e)=>{if(e.key==="Enter")handleSearch()}}>
                 <input type="text" placeholder="Search Recipes By Ingredients (Provide with comma seperation)" 
-                    className="py-3 px-6 rounded-full w-[80%] border-2 border-gray-500 focus:outline-none focus:border-orange-500 focus:shadow-outline focus:shadow-orange-700 shadow-gray-600 shadow-lg"
+                    className="py-3 px-6 rounded-full w-[70%] border-2 border-gray-500 focus:outline-none focus:border-[#41C9E2] focus:shadow-outline focus:shadow-[#41C9E2] shadow-gray-700 shadow-md"
                     onChange={(e)=>{handleSearchInput(e.target.value)}} value={searchInput}/>
                 <FaSearch className="relative -ml-10 mt-4 cursor-pointer" onClick={handleSearch} size={19}/>
             </div>
