@@ -160,19 +160,19 @@ const Nutrients = () => {
     
     return (
         <div className='mt-10'>
-            <div className='flex justify-center space-x-10 my-10'>
+            <div className='flex justify-center space-x-10 mt-16 mb-8'>
                 <h1 className='text-xl font-bold'>Provide The Range of Nutrients you want ( Per Serving )</h1>
                 <div>
-                    <button className='bg-orange-300 px-4 py-1 rounded-lg' onClick={handleAddBtn}>Add</button>
-                    {addBtn && <div className='absolute z-10 mt-4 -ml-7 bg-gray-200 rounded-lg flex-col overflow-y-scroll scrollbar-hide w-32  max-h-96'>
+                    <button className='bg-[#ACE2E1] px-4 py-1 rounded-lg' onClick={handleAddBtn}>Add</button>
+                    {addBtn && <div className='absolute z-10 mt-2 -ml-7 bg-[#ACE2E1] rounded-lg flex-col overflow-y-scroll scrollbar-hide w-32  max-h-96'>
                         {allNutrients.map(nutrient => <h1 key={nutrient.name} className='flex justify-center my-2 cursor-pointer' onClick={()=>handleAddNutrient(nutrient.name)}>{nutrient.name}</h1>)}
                     </div>}
                 </div>
-                <button className='bg-orange-300 px-4 py-1 rounded-lg' onClick={handleRemoveBtn}>Remove</button>
-                <button className='bg-orange-300 px-4 py-1 rounded-lg' onClick={handleSearch}>Search</button>
-                {/* <button className='bg-orange-300 px-4 py-1' onClick={handleClearAll}>Clear All</button> */}
+                <button className='bg-[#ACE2E1] px-4 py-1 rounded-lg' onClick={handleRemoveBtn}>Remove</button>
+                <button className='bg-[#ACE2E1] px-4 py-1 rounded-lg' onClick={handleSearch}>Search</button>
+                {/* <button className='bg-[#ACE2E1] px-4 py-1' onClick={handleClearAll}>Clear All</button> */}
             </div>
-            {!recipesInfo && <div className='absolute ml-[35%]'>
+            {!recipesInfo && !loading && <div className='absolute ml-[35%]'>
                 {allNutrients.map(nutrient => nutrient.isVisible && <div className='flex my-4'>
                     <h1 className='text-lg'>{nutrient.name}</h1>
                     <input type='number' placeholder='min' onChange={(e)=>handleMinValChange(e.target.value,nutrient.name)} value={nutrient.minVal} className='bg-gray-200 w-20 absolute ml-28'/>

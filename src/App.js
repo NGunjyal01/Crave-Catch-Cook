@@ -21,7 +21,7 @@ function App() {
       <Route path='/' element={<Body/>}>
         <Route path='' element={<Home/>}/>
         <Route path='/recipes' element={<Recipes/>}>
-          <Route path='dishName' element={<DishName/>}/>
+          <Route path='' element={<DishName/>}/>
           <Route path='ingredients' element={<Ingredients/>}/>
           <Route path='nutrients' element={<Nutrients/>}/>
         </Route>

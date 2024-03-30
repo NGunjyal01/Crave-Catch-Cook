@@ -1,5 +1,6 @@
 import useRandomRecipes from "../hooks/useRandomRecipes";
 import Carousel from "./Carousel";
+import Footer from "./Footer";
 import MainContainer from "./MainContainer";
 
 const Home = () => {
@@ -10,6 +11,7 @@ const Home = () => {
         <div>
             <Carousel/>
             <MainContainer/>
+            <Footer/>
         </div>
     )
 }
