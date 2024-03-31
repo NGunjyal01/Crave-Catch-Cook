@@ -13,6 +13,7 @@ import RecipePage from './components/RecipePage';
 import Favourites from './components/Favourites';
 import { Toaster } from 'react-hot-toast';
 import Recipes from './components/Recipes';
+import Authentication from './components/Authentication';
 
 function App() {
 
@@ -27,7 +28,7 @@ function App() {
         </Route>
         <Route path='recipe/:id' element={<RecipePage/>}/>
         <Route path='favourites' element={<Favourites/>}/>
-        <Route path='yourRecipes' element={<YourRecipes/>}/>
+        <Route path='authentication' element={<Authentication/>}/>
         <Route path='yourAccount' element={<YourAccount/>}/>
       </Route>
     )

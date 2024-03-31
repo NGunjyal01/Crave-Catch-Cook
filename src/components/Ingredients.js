@@ -35,11 +35,11 @@ const Ingredients = () => {
 
     return (
         <>
-            <div className="flex justify-center mt-[5%]" onKeyDown={(e)=>{if(e.key==="Enter")handleSearch()}}>
-                <input type="text" placeholder="Search Recipes By Ingredients (Provide with comma seperation)" 
-                    className="py-3 px-6 rounded-full w-[70%] border-2 border-gray-500 focus:outline-none focus:border-[#41C9E2] focus:shadow-outline focus:shadow-[#41C9E2] shadow-gray-700 shadow-md"
+            <div className="flex justify-center mt-[15%] sm:mt-[5%]" onKeyDown={(e)=>{if(e.key==="Enter")handleSearch()}}>
+                <input type="text" placeholder="Ingredients (with comma seperation)" 
+                    className="sm:py-3 p-2 sm:px-6 text-xs sm:text-base rounded-full w-[90%] sm:w-[70%] border-2 border-gray-500 focus:outline-none focus:border-[#41C9E2] focus:shadow-outline focus:shadow-[#41C9E2] shadow-gray-700 shadow-md"
                     onChange={(e)=>{handleSearchInput(e.target.value)}} value={searchInput}/>
-                <FaSearch className="relative -ml-10 mt-4 cursor-pointer" onClick={handleSearch} size={19}/>
+                <FaSearch className="Logos absolute right-[10%] sm:right-[16%] mt-2 sm:mt-4 cursor-pointer" onClick={handleSearch}/>
             </div>
             {loading ? <Shimmer/> : <div className="flex flex-wrap justify-center mt-10">
                 {recipesInfo && recipesInfo.map(recipe => <RecipeCard recipe={recipe}/>)}
