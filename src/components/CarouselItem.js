@@ -17,9 +17,10 @@ const CarouselItem = ({recipe}) => {
 
     return (
         <div className="flex bg-[#ACE2E1] w-[95%] h-[35rem] ml-[2.5%] rounded-[2rem] sm:rounded-[4rem] transition-transform duration-500 ease-in-out" >
-            <div className="mt-5 sm:mt-14 sm:ml-10 px-4 sm:px-0">
-                <h1 className="text-2xl sm:text-4xl font-bold sm:w-[80%]">{title}</h1>
-                <p dangerouslySetInnerHTML={{ __html: summary }} className="sm:w-[80%] mt-5 sm:mt-7 text-[0.6rem] sm:text-sm text-gray-800"/>
+            <div className="sm:mt-14 sm:ml-10 sm:px-0">
+                <img src={image} alt={title+" img"} className="block sm:hidden rounded-t-[2rem] w-full"/>
+                <h1 className="text-lg sm:text-4xl font-bold sm:w-[80%]">{title}</h1>
+                <p dangerouslySetInnerHTML={{ __html: summary }} className="sm:w-[80%] mt-5 sm:mt-7 text-[0.5rem] sm:text-sm text-gray-800"/>
                 <div className="absolute top-[48%] sm:top-[70%] ml-5 sm:ml-0 flex flex-wrap max-w-[20rem]">
                     <div className='flex justify-between bg-[#41C9E2] sm:w-36 w-24 h-8 sm:h-11 sm:px-5 px-2 py-2 rounded-lg sm:rounded-full shadow-sm mt-4 mr-4'>
                         <BiSolidDish className="Logos"/>
