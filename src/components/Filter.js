@@ -126,7 +126,7 @@ const Filter = ({ searchInput,setIsFilterModalVisible,setLoading,setRecipes }) =
 
     return (
     <div className="absolute top-0 z-50 flex justify-center w-full h-[200%] lg:h-full backdrop-blur-sm lg:pt-10">
-        <div className="w-full lg:w-[60%] bg-[#ACE2E1] p-5 rounded-lg">
+        <div className="w-full lg:w-[60%] bg-[#ACE2E1] py-7 px-5 lg:p-5 rounded-lg">
             <div className="my-2">
                 <div className="grid grid-cols-12">
                     <h1 className="col-span-5 sm:col-span-3 lg:col-span-2 mr-4 lg:text-xl font-bold">Sort</h1>
@@ -169,8 +169,8 @@ const Filter = ({ searchInput,setIsFilterModalVisible,setLoading,setRecipes }) =
                     </div>)}
                 </div>
             </div>
-            <button onClick={handleFilterModalClose} className="absolute top-4 lg:top-14 right-4 lg:right-[21%] text-xl bg-[#F7EEDD] px-2 rounded-full">X</button>
-            <div className="flex ml-[60%] mt-10 space-x-4">
+            <button onClick={handleFilterModalClose} className="absolute top-6 lg:top-14 right-4 lg:right-[21%] text-xl bg-[#F7EEDD] px-2 rounded-full">X</button>
+            <div className="flex lg:ml-[60%] mt-10 space-x-4">
                 <button onClick={handleClearFilter} className="bg-[#F7EEDD] px-7 py-1 rounded-lg">Clear Filter</button>
                 <button onClick={handleSearch} className="bg-[#F7EEDD] px-7 py-1 rounded-lg">Apply Changes</button>
             </div>
