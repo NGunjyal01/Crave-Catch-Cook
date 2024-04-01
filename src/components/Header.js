@@ -1,16 +1,45 @@
-import { NavLink } from "react-router-dom"
+import { NavLink } from "react-router-dom";
+import { RxHamburgerMenu } from "react-icons/rx";
+import { useEffect, useState } from "react";
+import SideMenu from "./SideMenu";
 
 const Header = () => {
+
+    const [isSideMenuOpen,setIsSideMenuOpen] = useState(false);
+
+    const handleSideMenuClick = ()=>{
+        setIsSideMenuOpen(true);
+    };
+
+    useEffect(() => {
+        if (isSideMenuOpen) {
+            document.body.style.overflow = 'hidden'; // Disable scrolling when modal is open
+        } else {
+            document.body.style.overflow = ''; // Enable scrolling when modal is closed
+        }
+
+        return () => {
+            document.body.style.overflow = ''; // Reset overflow style when component unmounts
+        };
+    }, [isSideMenuOpen]);
+
     return (
-    <div className="fixed z-20 w-full top-0 flex justify-between bg-[#ACE2E1] sm:px-20 sm:py-7 p-4 text-gray-800">
-        <h1 className="sm:text-2xl font-bold font-serif">Crave Catch Cook</h1>
-        <div className="hidden sm:block flex space-x-4 mr-7 text-lg">
-            <NavLink to={"/"}>Home</NavLink>
-            <NavLink to={"/recipes"}>Recipes</NavLink>
-            <NavLink to={"/favourites"}>Favourites</NavLink>
-            <NavLink to={"/yourAccount"}>Your Account</NavLink>
-        </div>
-    </div>
+        <>
+            <div className="fixed z-20 w-full top-0 flex bg-[#ACE2E1] lg:py-7 p-4 text-gray-800">
+                <h1 className="sm:ml-[5%] sm:text-lg lg:text-2xl font-bold font-serif">Crave Catch Cook</h1>
+                <div className="ml-[20%] hidden lg:flex lg:space-x-4 mr-7 sm:text-sm lg:text-lg">
+                    <NavLink to={"/"}>Home</NavLink>
+                    <NavLink to={"/recipes"}>Recipes</NavLink>
+                    <NavLink to={"/favourites"}>Favourites</NavLink>
+                    <NavLink to={"/yourAccount"}>Your Account</NavLink>
+                </div>
+                <RxHamburgerMenu className="lg:hidden ml-[45%] sm:ml-[70%]" onClick={handleSideMenuClick}/>
+                <div className="hidden lg:block ml-[25%]">
+                    Login/Signup
+                </div>
+            </div>
+            {isSideMenuOpen && <SideMenu setIsSideMenuOpen={setIsSideMenuOpen}/>}
+        </>
     )
 }
 
