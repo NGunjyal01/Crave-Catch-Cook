@@ -5,7 +5,7 @@ import MainContainer from "./MainContainer";
 
 const Home = () => {
 
-    useRandomRecipes();
+    // useRandomRecipes();
 
     return (
         <div>
