@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SideMenu from "./SideMenu";
 
 const Header = () => {
@@ -10,7 +10,7 @@ const Header = () => {
     const handleSideMenuClick = ()=>{
         setIsSideMenuOpen(true);
     };
-    
+
     return (
         <>
             <div className="fixed z-20 w-full top-0 flex bg-[#ACE2E1] lg:py-7 p-4 text-gray-800">

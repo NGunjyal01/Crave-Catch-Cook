@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink,Outlet } from "react-router-dom";
 
 const Recipes = () => {
@@ -8,8 +8,13 @@ const Recipes = () => {
   const [activeIndex,setActiveIndex] = useState(0);
 
   const isActive = (index) => {
+    // Set active index to null first to force re-render even if clicking on the same route
+    setActiveIndex(null);
+    // Then set it back to the clicked index
     setActiveIndex(index);
   };
+
+  console.log(activeIndex);
 
   return (
     <>
