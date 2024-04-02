@@ -1,10 +1,11 @@
-import React from 'react'
+
 
 const Authentication = () => {
+
     return (
-    <div>
-        
-    </div>
+        <div>
+            
+        </div>
     )
 }
 

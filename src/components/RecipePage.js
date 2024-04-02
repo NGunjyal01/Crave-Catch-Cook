@@ -2154,83 +2154,65 @@ const RecipePage = () => {
     const steps = analyzedInstructions[0].steps;
 
     return (
-        <div className='px-10 mt-[10%]'>
+        <div className='lg:px-10 lg:mt-[10%] mt-[30%]'>
             {/* Section 1 */}
-            <div className='flex justify-center mb-5 text-4xl font-bold space-x-5'>
-                <h1>{title}</h1>
-                <img src={notSavedLogo} alt='not saved logo' className='w-10 mt-1'/>
-            </div>
-            <div className='flex mt-10'>
-                <img src={image} alt={title+" img"} className='ml-40 w-[42%] shadow-lg shadow-gray-700 rounded-lg hover:scale-105 transition-transform ease-in-out'/>
-                <div className='flex ml-14'>
-                    <div className='flex flex-col space-y-5 mr-4 w-72'>
-                        <div className='flex justify-between bg-gray-100 px-7 py-2 rounded-lg shadow-sm shadow-gray-700'>
-                            <BiSolidDish size={40}/>
-                            <h1 className='text-lg mt-1'>{servings + " servings"}</h1>
-                        </div>
-                        <div className='flex  justify-between bg-gray-100 px-7 py-2 rounded-lg shadow-sm shadow-gray-700'>
-                            <img src={caloriesLogo} alt='calories img' className='w-10'/>
-                            <h1 className='text-lg mt-1'>126kcal</h1>
-                        </div>
-                        <div className='flex  justify-between bg-gray-100 px-7 py-2 rounded-lg shadow-sm shadow-gray-700'>
-                            <IoMdAlarm size={40}/>
-                            <h1 className='mt-1'>{"Prepation Time "+readyInMinutes+"min"}</h1>
-                        </div>
-                        <div className='flex justify-between bg-gray-100 px-7 py-2 rounded-lg shadow-sm shadow-gray-700'>
-                            <AiFillDollarCircle size={40}/>
-                            <h1 className='mt-1'>{"$"+pricePerServing + " per Serving"}</h1>
-                        </div>
-                        <div className='flex justify-between bg-gray-100 px-7 py-2 rounded-lg shadow-sm shadow-gray-700'>
-                            <img src={vegetarain ? vegLogo : nonVegLogo} className='w-10'/>
-                            <h1 className='mt-1'>{vegetarain?"Vegetarain":"Non-Vegetarain"}</h1>
-                        </div>
+            <h1 className='flex justify-center mb-5 text-2xl lg:text-4xl font-bold'>{title}</h1>
+            <div className='flex flex-col lg:flex-row mt-10 ml-10 lg:ml-0'>
+                <img src={image} alt={title+" img"} className='lg:ml-40 w-full lg:w-[42%] shadow-lg shadow-gray-700 rounded-lg lg:hover:scale-95 transition-transform ease-in-out'/>
+                <div className='grid grid-cols-12 lg:ml-14 lg:max-w-[38rem] mt-4 lg:mt-0'>
+                    <div className='col-span-6 flex justify-between bg-gray-100 mr-4 mt-5 px-4 lg:px-7 py-1 lg:py-2 max-h-14 lg:w-72 rounded-lg shadow-sm shadow-gray-700'>
+                        <BiSolidDish className='Logos mt-1'/>
+                        <h1 className='text-sm lg:text-lg lg:mt-1'>{servings + " servings"}</h1>
                     </div>
-                    <div className='flex flex-col space-y-5 w-72'>
-                        {vegan && <div className='flex justify-between bg-gray-100 px-7 py-2 rounded-lg shadow-sm shadow-gray-700'>
-                            <img src={veganLogo} alt='vegan logo' className='w-10'/>
-                            <h1 className='text-lg mt-1'>Vegan</h1>
-                        </div>}
-                        {glutenFree && <div className='flex justify-between bg-gray-100 px-7 py-2 rounded-lg shadow-sm shadow-gray-700'>
-                            <img src={glutenFreeLogo} alt='gluten free logo' className='w-10'/>
-                            <h1 className='text-lg mt-1'>Gluten Free</h1>    
-                        </div>}
-                        {dairyFree && <div className='flex justify-between bg-gray-100 px-7 py-2 rounded-lg shadow-sm shadow-gray-700'>
-                            <img src={dairyFreeLogo} alt='dairy free logo' className='w-10'/>
-                            <h1 className='text-lg mt-1'>Dairy Free</h1>
-                        </div>}
+                    <div className='col-span-6 flex justify-between bg-gray-100 mr-4 mt-5 px-4 lg:px-7 py-1 lg:py-2 max-h-14 lg:w-72 rounded-lg shadow-sm shadow-gray-700'>
+                        <img src={caloriesLogo} alt='calories img' className='w-5 lg:w-10 object-contain'/>
+                        <h1 className='text-sm lg:text-lg mt-1'>126kcal</h1>
                     </div>
+                    <div className='col-span-6 flex justify-between bg-gray-100 mr-4 mt-5 px-4 lg:px-7 py-1 lg:py-2 max-h-14 lg:w-72 rounded-lg shadow-sm shadow-gray-700'>
+                        <IoMdAlarm className='Logos mt-1'/>
+                        <h1 className='hidden lg:block mt-1'>{"Prepation Time "+readyInMinutes+"min"}</h1>
+                        <h1 className='block lg:hidden text-sm mt-1'>{readyInMinutes+"min"}</h1>
+                    </div>
+                    <div className='col-span-6 flex justify-between bg-gray-100 mr-4 mt-5 px-4 lg:px-7 py-1 lg:py-2 max-h-14 lg:w-72 rounded-lg shadow-sm shadow-gray-700'>
+                        <AiFillDollarCircle className='Logos mt-1'/>
+                        <h1 className='hidden lg:block mt-1'>{"$"+pricePerServing + " per Serving"}</h1>
+                        <h1 className='block lg:hidden text-sm'>{"$"+pricePerServing}</h1>
+                    </div>
+                    <div className='col-span-6 flex justify-between bg-gray-100 mr-4 mt-5 px-4 lg:px-7 py-1 lg:py-2 max-h-14 lg:w-72 rounded-lg shadow-sm shadow-gray-700'>
+                        <img src={vegetarain ? vegLogo : nonVegLogo} className='w-5 lg:w-10 object-contain'/>
+                        <h1 className='hidden lg:block mt-1'>{vegetarain?"Vegetarain":"Non-Vegetarain"}</h1>
+                        <h1 className='block lg:hidden text-sm mt-1'>{vegetarain?"Veg":"Non-Veg"}</h1>
+                    </div>
+                    {<div className='col-span-6 flex justify-between bg-gray-100 mr-4 mt-5 px-4 lg:px-7 py-1 lg:py-2 max-h-14 lg:w-72 rounded-lg shadow-sm shadow-gray-700'>
+                        <img src={veganLogo} alt='vegan logo' className='w-5 lg:w-10 object-contain'/>
+                        <h1 className='text-sm lg:text-lg lg:mt-1'>Vegan</h1>
+                    </div>}
+                    { <div className='col-span-6 flex justify-between bg-gray-100 mr-4 mt-5 px-4 lg:px-7 py-1 lg:py-2 max-h-14 lg:w-72 rounded-lg shadow-sm shadow-gray-700'>
+                        <img src={glutenFreeLogo} alt='gluten free logo' className='w-5 lg:w-10 object-contain'/>
+                        <h1 className='text-sm lg:text-lg lg:mt-1'>Gluten Free</h1>    
+                    </div>}
+                    { <div className='col-span-6 flex justify-between bg-gray-100 mr-4 mt-5 px-4 lg:px-7 py-1 lg:py-2 max-h-14 lg:w-72 rounded-lg shadow-sm shadow-gray-700'>
+                        <img src={dairyFreeLogo} alt='dairy free logo' className='w-5 lg:w-10 object-contain'/>
+                        <h1 className='text-sm lg:text-lg lg:mt-1'>Dairy Free</h1>
+                    </div>}
                 </div>
             </div>
             {/* Section 2 */}
-            {/* <div className='ml-[10%] mt-10 grid grid-cols-12 space-x-10'>
-                <div className='col-span-4'>
-                    <h1 className='text-2xl font-semibold'>Ingredients</h1>
-                    <ul className='list-disc mt-5 text-lg'>
-                        {extendedIngredients.map(ingredient => <li className=''>{ingredient.original}</li>)}
-                    </ul>
-                </div>
-                <div className='col-span-8 w-[90%]'>
-                    <h1 className='text-2xl font-semibold mb-4'>Nutrients</h1>
-                    <div className='flex flex-wrap text-lg'>
-                        {nutrients.slice(0,15).map(nutrient=><h1 className='mr-7 my-2'>{nutrient.name +"- " + nutrient.amount+nutrient.unit}</h1>)}
-                    </div>
-                </div>
-            </div> */}
-            <div className='ml-[10%] mt-20'>
-                <p dangerouslySetInnerHTML={{ __html: summary }} className='w-[90%]'></p>
-                <h1 className='text-3xl font-semibold mt-10 mb-4'>Ingredients</h1>
+            <div className='ml-5 lg:ml-[10%] mt-10 lg:mt-20'>
+                <p dangerouslySetInnerHTML={{ __html: summary }} className='lg:w-[90%] text-xs lg:text-base'></p>
+                <h1 className='text-xl lg:text-3xl font-semibold mt-5 lg:mt-10 mb-4'>Ingredients</h1>
                 <div className='grid grid-cols-12'>
-                    {extendedIngredients.map(ingredient =><div className='col-span-2 flex flex-col items-center mx-3 mt-4 py-2 bg-gray-100 shadow-sm shadow-gray-700 rounded-lg'>
-                        <h1 className='mb-2'>{ingredient.amount +" " +ingredient.unit}</h1>
-                        <img src={Ingredients_IMG_CDN+ingredient.image} alt={ingredient.name + " img"} className='w-28 h-28 object-contain mix-blend-multiply'/>
-                        <h1 className='my-4'>{ingredient.name}</h1>
+                    {extendedIngredients.map(ingredient =><div className='col-span-6 lg:col-span-2 flex flex-col items-center mx-3 mt-4 py-2 bg-gray-100 shadow-sm shadow-gray-700 rounded-lg'>
+                        <h1 className='text-xs lg:text-base my-2'>{ingredient.amount +" " +ingredient.unit}</h1>
+                        <img src={Ingredients_IMG_CDN+ingredient.image} alt={ingredient.name + " img"} className='w-20 lg:w-28 h-20 lg:h-28 object-contain mix-blend-multiply'/>
+                        <h1 className='text-xs lg:text-base my-4'>{ingredient.name}</h1>
                     </div>)}
                 </div>
             </div>
             {/* Section 3 */}
-            <div className='ml-[10%] mt-16 w-[85%]'>
-                <h1 className='text-3xl font-semibold mb-4'>{"Analyzed Instructions ( Preparation Time - " + readyInMinutes + "min )"}</h1>
-                <ul className='list-decimal text-lg'>
+            <div className='ml-7 lg:ml-[10%] mt-8 lg:mt-16 lg:w-[85%]'>
+                <h1 className='text-lg lg:text-3xl font-semibold mb-4'>{"Analyzed Instructions ( Preparation Time - " + readyInMinutes + "min )"}</h1>
+                <ul className='list-decimal text-sm lg:text-lg'>
                     {steps.map(step=> <div className='space-y-2 mt-4'>
                         <li>{step.step}</li>
                         {step.ingredients.length!==0 && <h1 className='ml-7'><span className='font-semibold'>Ingredients</span> - {step.ingredients.map(ingredient => ingredient.name).join(", ")}</h1>}
@@ -2239,19 +2221,19 @@ const RecipePage = () => {
                 </ul>
             </div>
             {/* Section 4 */}
-            <div className='ml-[10%] mt-16'>
-                <h1 className='text-3xl font-semibold'>Nutritional Information</h1>
-                <div className='mt-4 ml-2'>
+            <div className='ml-5 lg:ml-[10%] mt-8 lg:mt-16'>
+                <h1 className='text-lg lg:text-3xl font-semibold'>Nutritional Information</h1>
+                <div className='mt-4 lg:ml-2'>
                     {nutrients.map(nutrient => <div className='grid grid-cols-12 my-3'>
-                        <h1 className='col-span-3'>{nutrient.name}</h1>
-                        <h1 className='col-span-2'>{nutrient.amount + " " + nutrient.unit}</h1>
+                        <h1 className='col-span-4 lg:col-span-3 text-sm lg:text-base'>{nutrient.name}</h1>
+                        <h1 className='col-span-3 lg:col-span-2 text-sm lg:text-base'>{nutrient.amount + " " + nutrient.unit}</h1>
                         <progress value={nutrient.percentOfDailyNeeds} className='col-span-5 mt-1' max={100}/>
                     </div>)}
                 </div>
             </div>
             {/* Section 5 */}
-            <div className='ml-[10%] mt-10 text-lg font-semibold'>
-                <h1>{"Source Name - " + sourceName}</h1>
+            <div className='ml-5 lg:ml-[10%] my-10 text-sm lg:text-lg font-semibold'>
+                <h1 className='my-3'>{"Source Name - " + sourceName}</h1>
                 <h1>Source Url - <a href={sourceUrl}>{sourceUrl}</a></h1>
             </div>
             {/* <SimilarRecipes recipeId={recipeId}/> */}
