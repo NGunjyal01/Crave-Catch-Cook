@@ -12,17 +12,17 @@ const DishName = () => {
     const [loading,setLoading] = useState(null);
     const [isFilterModalVisible,setIsFilterModalVisible] = useState(false);
 
-    useEffect(() => {
-        if (isFilterModalVisible) {
-            document.body.style.overflow = 'hidden'; // Disable scrolling when modal is open
-        } else {
-            document.body.style.overflow = ''; // Enable scrolling when modal is closed
-        }
+    // useEffect(() => {
+    //     if (isFilterModalVisible) {
+    //         document.body.style.overflow = 'hidden'; // Disable scrolling when modal is open
+    //     } else {
+    //         document.body.style.overflow = ''; // Enable scrolling when modal is closed
+    //     }
 
-        return () => {
-            document.body.style.overflow = ''; // Reset overflow style when component unmounts
-        };
-    }, [isFilterModalVisible]);
+    //     return () => {
+    //         document.body.style.overflow = ''; // Reset overflow style when component unmounts
+    //     };
+    // }, [isFilterModalVisible]);
 
     const handleSearchInput = (value)=>{
         setSearchInput(value);

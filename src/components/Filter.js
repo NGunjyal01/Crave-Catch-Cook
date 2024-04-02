@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { sort,mealType,intolerances,cuisines, API_KEY, sortDirection } from "../utils/constants";
 import { FaChevronDown } from "react-icons/fa";
 import toast from "react-hot-toast";
@@ -12,6 +12,16 @@ const Filter = ({ searchInput,setIsFilterModalVisible,setLoading,setRecipes }) =
     const [selectedIntolerances,setSelectedIntolerances] = useState(intolerances);
     const [selectedCuisines,setSelectedCuisines] = useState(cuisines);
     const [sortOrder,setSortOrder] = useState(sortDirection);
+
+    useEffect(() => {
+        // Disable scrolling on the background when the modal is open
+        document.body.style.overflow = 'hidden';
+        
+        return () => {
+            // Enable scrolling on the background when the modal is closed
+            document.body.style.overflow = '';
+        };
+    }, []);
 
     const handleSelectClick = ()=>{
         setShowSortOptions(!showSortOptions);
@@ -67,6 +77,7 @@ const Filter = ({ searchInput,setIsFilterModalVisible,setLoading,setRecipes }) =
 
     const handleFilterModalClose = ()=>{
         setIsFilterModalVisible(false);
+        document.body.style.overflow = '';
     }
 
     const handleSortOrder = ()=>{
@@ -126,7 +137,7 @@ const Filter = ({ searchInput,setIsFilterModalVisible,setLoading,setRecipes }) =
 
     return (
     <div className="absolute top-0 z-50 flex justify-center w-full h-[200%] lg:h-full backdrop-blur-sm lg:pt-10">
-        <div className="w-full lg:w-[60%] bg-[#ACE2E1] py-7 px-5 lg:p-5 rounded-lg">
+        <div className="w-full lg:w-[60%] bg-[#ACE2E1] py-7 px-5 lg:p-5 rounded-lg overflow-y-scroll scrollbar-hide">
             <div className="my-2">
                 <div className="grid grid-cols-12">
                     <h1 className="col-span-5 sm:col-span-3 lg:col-span-2 mr-4 lg:text-xl font-bold">Sort</h1>

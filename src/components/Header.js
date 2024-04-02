@@ -10,19 +10,7 @@ const Header = () => {
     const handleSideMenuClick = ()=>{
         setIsSideMenuOpen(true);
     };
-
-    useEffect(() => {
-        if (isSideMenuOpen) {
-            document.body.style.overflow = 'hidden'; // Disable scrolling when modal is open
-        } else {
-            document.body.style.overflow = ''; // Enable scrolling when modal is closed
-        }
-
-        return () => {
-            document.body.style.overflow = ''; // Reset overflow style when component unmounts
-        };
-    }, [isSideMenuOpen]);
-
+    
     return (
         <>
             <div className="fixed z-20 w-full top-0 flex bg-[#ACE2E1] lg:py-7 p-4 text-gray-800">
@@ -33,7 +21,7 @@ const Header = () => {
                     <NavLink to={"/favourites"}>Favourites</NavLink>
                     <NavLink to={"/yourAccount"}>Your Account</NavLink>
                 </div>
-                <RxHamburgerMenu className="lg:hidden ml-[45%] sm:ml-[70%]" onClick={handleSideMenuClick}/>
+                <RxHamburgerMenu className="lg:hidden ml-[45%] sm:ml-[70%]" onClick={handleSideMenuClick} size={20}/>
                 <div className="hidden lg:block ml-[25%]">
                     Login/Signup
                 </div>

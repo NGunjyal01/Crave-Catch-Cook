@@ -1,10 +1,22 @@
+import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
 
 const SideMenu = ({setIsSideMenuOpen}) => {
 
+    useEffect(() => {
+        // Disable scrolling on the background when the modal is open
+        document.body.style.overflow = 'hidden';
+        
+        return () => {
+            // Enable scrolling on the background when the modal is closed
+            document.body.style.overflow = '';
+        };
+    }, []);
+
     const handleCloseBtn = ()=>{
         setIsSideMenuOpen(false);
+        document.body.style.overflow = '';
     }
 
     return (
