@@ -17,8 +17,8 @@ import ProgressBar from "@ramonak/react-progress-bar";
 const RecipePage = () => {
 
     const recipeId = useParams().id;
-    // const [recipeInfo,setRecipeInfo] = useState(null);
-    const recipeInfo ={
+    const [recipeInfo,setRecipeInfo] = useState(null);
+    const recipeInfo1 ={
         "vegetarian": false,
         "vegan": false,
         "glutenFree": true,
@@ -2136,17 +2136,17 @@ const RecipePage = () => {
         "spoonacularScore": 48.6579704284668,
         "spoonacularSourceUrl": "https://spoonacular.com/chicken-65-637876"
     }
-    // const info = recipeInfo1.nutrition.nutrients.map(name => name.name).join(",");
-    // console.log(info);
-    // const getRecipeInformation = async()=>{
-    //     const data = await fetch("https://api.spoonacular.com/recipes/" + recipeId + "/information?apiKey="+ API_KEY + "&includeNutrition=true");
-    //     const json = await data.json();
-    //     setRecipeInfo(json);
-    // }
+    const info = recipeInfo1.nutrition.nutrients.map(name => name.name).join(",");
+    console.log(info);
+    const getRecipeInformation = async()=>{
+        const data = await fetch("https://api.spoonacular.com/recipes/" + recipeId + "/information?apiKey="+ API_KEY + "&includeNutrition=true");
+        const json = await data.json();
+        setRecipeInfo(json);
+    }
 
-    // useEffect(()=>{
-    //     getRecipeInformation();
-    // },[recipeId]);
+    useEffect(()=>{
+        getRecipeInformation();
+    },[recipeId]);
     if(!recipeInfo) return null;
     const {vegetarain,vegan,glutenFree,dairyFree,sourceName,pricePerServing,extendedIngredients,title,servings,readyInMinutes,sourceUrl,image,nutrition,summary,analyzedInstructions,spoonacularSourceUrl} = recipeInfo;
     const {nutrients} = nutrition;
@@ -2154,12 +2154,12 @@ const RecipePage = () => {
     const steps = analyzedInstructions[0].steps;
 
     return (
-        <div className='lg:px-10 lg:mt-[10%] mt-[30%]'>
+        <div className='px-5 lg:px-10 lg:mt-[10%] mt-[30%]'>
             {/* Section 1 */}
             <h1 className='flex justify-center mb-5 text-2xl lg:text-4xl font-bold'>{title}</h1>
-            <div className='flex flex-col lg:flex-row mt-10 ml-10 lg:ml-0'>
-                <img src={image} alt={title+" img"} className='lg:ml-40 w-full lg:w-[42%] shadow-lg shadow-gray-700 rounded-lg lg:hover:scale-95 transition-transform ease-in-out'/>
-                <div className='grid grid-cols-12 lg:ml-14 lg:max-w-[38rem] mt-4 lg:mt-0'>
+            <div className='flex flex-col lg:flex-row mt-10'>
+                <img src={image} alt={title+" img"} className='ml-5 lg:ml-40 w-[90%] lg:w-[42%] shadow-lg shadow-gray-700 rounded-lg lg:hover:scale-95 transition-transform ease-in-out'/>
+                <div className='grid grid-cols-12 ml-5 lg:ml-14 lg:max-w-[38rem] mt-4 lg:mt-0'>
                     <div className='col-span-6 flex justify-between bg-gray-100 mr-4 mt-5 px-4 lg:px-7 py-1 lg:py-2 max-h-14 lg:w-72 rounded-lg shadow-sm shadow-gray-700'>
                         <BiSolidDish className='Logos mt-1'/>
                         <h1 className='text-sm lg:text-lg lg:mt-1'>{servings + " servings"}</h1>
@@ -2183,22 +2183,22 @@ const RecipePage = () => {
                         <h1 className='hidden lg:block mt-1'>{vegetarain?"Vegetarain":"Non-Vegetarain"}</h1>
                         <h1 className='block lg:hidden text-sm mt-1'>{vegetarain?"Veg":"Non-Veg"}</h1>
                     </div>
-                    {<div className='col-span-6 flex justify-between bg-gray-100 mr-4 mt-5 px-4 lg:px-7 py-1 lg:py-2 max-h-14 lg:w-72 rounded-lg shadow-sm shadow-gray-700'>
+                    {vegan && <div className='col-span-6 flex justify-between bg-gray-100 mr-4 mt-5 px-4 lg:px-7 py-1 lg:py-2 max-h-14 lg:w-72 rounded-lg shadow-sm shadow-gray-700'>
                         <img src={veganLogo} alt='vegan logo' className='w-5 lg:w-10 object-contain'/>
                         <h1 className='text-sm lg:text-lg lg:mt-1'>Vegan</h1>
                     </div>}
-                    { <div className='col-span-6 flex justify-between bg-gray-100 mr-4 mt-5 px-4 lg:px-7 py-1 lg:py-2 max-h-14 lg:w-72 rounded-lg shadow-sm shadow-gray-700'>
+                    {glutenFree && <div className='col-span-6 flex justify-between bg-gray-100 mr-4 mt-5 px-4 lg:px-7 py-1 lg:py-2 max-h-14 lg:w-72 rounded-lg shadow-sm shadow-gray-700'>
                         <img src={glutenFreeLogo} alt='gluten free logo' className='w-5 lg:w-10 object-contain'/>
                         <h1 className='text-sm lg:text-lg lg:mt-1'>Gluten Free</h1>    
                     </div>}
-                    { <div className='col-span-6 flex justify-between bg-gray-100 mr-4 mt-5 px-4 lg:px-7 py-1 lg:py-2 max-h-14 lg:w-72 rounded-lg shadow-sm shadow-gray-700'>
+                    {dairyFree && <div className='col-span-6 flex justify-between bg-gray-100 mr-4 mt-5 px-4 lg:px-7 py-1 lg:py-2 max-h-14 lg:w-72 rounded-lg shadow-sm shadow-gray-700'>
                         <img src={dairyFreeLogo} alt='dairy free logo' className='w-5 lg:w-10 object-contain'/>
                         <h1 className='text-sm lg:text-lg lg:mt-1'>Dairy Free</h1>
                     </div>}
                 </div>
             </div>
             {/* Section 2 */}
-            <div className='ml-5 lg:ml-[10%] mt-10 lg:mt-20'>
+            <div className='lg:ml-[10%] mt-10 lg:mt-20'>
                 <p dangerouslySetInnerHTML={{ __html: summary }} className='lg:w-[90%] text-xs lg:text-base'></p>
                 <h1 className='text-xl lg:text-3xl font-semibold mt-5 lg:mt-10 mb-4'>Ingredients</h1>
                 <div className='grid grid-cols-12'>
@@ -2210,7 +2210,7 @@ const RecipePage = () => {
                 </div>
             </div>
             {/* Section 3 */}
-            <div className='ml-7 lg:ml-[10%] mt-8 lg:mt-16 lg:w-[85%]'>
+            <div className='ml-2 lg:ml-[10%] mt-8 lg:mt-16 lg:w-[85%]'>
                 <h1 className='text-lg lg:text-3xl font-semibold mb-4'>{"Analyzed Instructions ( Preparation Time - " + readyInMinutes + "min )"}</h1>
                 <ul className='list-decimal text-sm lg:text-lg'>
                     {steps.map(step=> <div className='space-y-2 mt-4'>
@@ -2221,22 +2221,22 @@ const RecipePage = () => {
                 </ul>
             </div>
             {/* Section 4 */}
-            <div className='ml-5 lg:ml-[10%] mt-8 lg:mt-16'>
+            <div className=' lg:ml-[10%] mt-8 lg:mt-16'>
                 <h1 className='text-lg lg:text-3xl font-semibold'>Nutritional Information</h1>
                 <div className='mt-4 lg:ml-2'>
                     {nutrients.map(nutrient => <div className='grid grid-cols-12 my-3'>
                         <h1 className='col-span-4 lg:col-span-3 text-sm lg:text-base'>{nutrient.name}</h1>
-                        <h1 className='col-span-3 lg:col-span-2 text-sm lg:text-base'>{nutrient.amount + " " + nutrient.unit}</h1>
-                        <progress value={nutrient.percentOfDailyNeeds} className='col-span-5 mt-1' max={100}/>
+                        <h1 className='col-span-4 lg:col-span-2 text-sm lg:text-base'>{nutrient.amount + " " + nutrient.unit}</h1>
+                        <progress value={nutrient.percentOfDailyNeeds} className='col-span-4 lg:col-span-5 mt-1 max-w-28 lg:max-w-full' max={100}/>
                     </div>)}
                 </div>
             </div>
             {/* Section 5 */}
-            <div className='ml-5 lg:ml-[10%] my-10 text-sm lg:text-lg font-semibold'>
+            <div className='lg:ml-[10%] my-10 text-sm lg:text-lg font-semibold'>
                 <h1 className='my-3'>{"Source Name - " + sourceName}</h1>
                 <h1>Source Url - <a href={sourceUrl}>{sourceUrl}</a></h1>
             </div>
-            {/* <SimilarRecipes recipeId={recipeId}/> */}
+            <SimilarRecipes recipeId={recipeId}/>
         </div>
     )
 }

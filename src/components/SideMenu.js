@@ -1,8 +1,13 @@
+import { signOut } from "firebase/auth";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { auth } from "../utils/firebase";
 
 
 const SideMenu = ({setIsSideMenuOpen}) => {
+
+    const user = useSelector(store => store.user);
 
     useEffect(() => {
         // Disable scrolling on the background when the modal is open
@@ -18,6 +23,16 @@ const SideMenu = ({setIsSideMenuOpen}) => {
         setIsSideMenuOpen(false);
         document.body.style.overflow = '';
     }
+    const handleSignOut = () => {
+        signOut(auth)
+        .then(() => {
+            // Sign-out successful.
+            setIsSideMenuOpen(false);
+        })
+        .catch((error) => {
+            // An error happened.
+        });
+    };
 
     return (
     <div className="absolute z-50 top-0 w-full h-[200%] bg-[#F7EEDD] flex flex-col">
@@ -27,6 +42,8 @@ const SideMenu = ({setIsSideMenuOpen}) => {
             <NavLink to={"/recipes"} onClick={handleCloseBtn}>Recipes</NavLink>
             <NavLink to={"/favourites"} onClick={handleCloseBtn}>Favourites</NavLink>
             <NavLink to={"/yourAccount"} onClick={handleCloseBtn}>Your Account</NavLink>
+            {!user && <NavLink to={"/authentication"} onClick={handleCloseBtn}>Login/SignUp</NavLink>}
+            {user && <button onClick={handleSignOut}>SignOut</button>}
         </div>
     </div>
     )

@@ -1,15 +1,70 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SideMenu from "./SideMenu";
+import { addUser,removeUser } from "../utils/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {auth}  from "../utils/firebase";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 
 const Header = () => {
 
     const [isSideMenuOpen,setIsSideMenuOpen] = useState(false);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const user = useSelector(store => store.user);
 
     const handleSideMenuClick = ()=>{
         setIsSideMenuOpen(true);
     };
+    
+    const handleSignOut = () => {
+        signOut(auth)
+        .then(() => {
+            // Sign-out successful.
+        })
+        .catch((error) => {
+            // An error happened.
+        });
+    };
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+          if(user) {
+            const { uid, email, displayName, phoneNumber, photoURL } = user;
+            dispatch(
+              addUser({
+                uid: uid,
+                email: email,
+                displayName: displayName,
+                phoneNumber: phoneNumber,
+                photoURL: photoURL,
+              })
+            );
+            // const db = getFirestore();
+            // const docRef = doc(db, "Users",uid);
+            // getDoc(docRef).then((docSnap)=>{
+            //   if(!docSnap.exists()){
+            //     // docSnap.data() will be undefined in this case
+            //     setDoc(docRef,{
+            //       movies:[],
+            //       tvShows:[],
+            //     });
+            //     // console.log("new doc created")
+            //   }
+            // })
+            navigate("/");
+          } else {
+            // User is signed out
+            dispatch(removeUser());
+            navigate("/");
+          }
+        });
+    
+        return () => unsubscribe();
+      }, []);
+
+
 
     return (
         <>
@@ -22,9 +77,8 @@ const Header = () => {
                     <NavLink to={"/yourAccount"}>Your Account</NavLink>
                 </div>
                 <RxHamburgerMenu className="lg:hidden ml-[45%] sm:ml-[70%]" onClick={handleSideMenuClick} size={20}/>
-                <div className="hidden lg:block ml-[25%]">
-                    Login/Signup
-                </div>
+                {!user && <Link to={"/authentication"} className="hidden lg:block ml-[25%] sm:text-sm lg:text-lg">Login/SignUp</Link>}
+                {user && <button onClick={handleSignOut} className="hidden lg:block ml-[25%] sm:text-sm lg:text-lg">Signout</button>}
             </div>
             {isSideMenuOpen && <SideMenu setIsSideMenuOpen={setIsSideMenuOpen}/>}
         </>

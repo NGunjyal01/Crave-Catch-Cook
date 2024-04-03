@@ -2,7 +2,6 @@ import './App.css';
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 import Body from './components/Body';
 import Home from "./components/Home";
-import YourRecipes from './components/YourRecipes';
 import YourAccount from './components/YourAccount';
 import DishName from './components/DishName';
 import Ingredients from './components/Ingredients';
@@ -13,7 +12,7 @@ import RecipePage from './components/RecipePage';
 import Favourites from './components/Favourites';
 import { Toaster } from 'react-hot-toast';
 import Recipes from './components/Recipes';
-import Authentication from './components/Authentication';
+import Authentication from './components/Auth/Authentication';
 
 function App() {
 
