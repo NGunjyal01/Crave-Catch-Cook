@@ -5,7 +5,7 @@ import RecipeCard from './RecipeCard';
 
 const Favourites = () => {
 
-    const user = useSelector(store => store.user);
+    const user = useSelector(store => store.user.userInfo);
     const favRecipes = useSelector(store => store.favRecipes);
 
     return !user?(<div className='flex justify-center mx-5 mt-[50%] lg:mt-[20%] lg:text-3xl'>

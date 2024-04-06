@@ -7,7 +7,7 @@ import { addFavRecipes } from "../../utils/favRecipesSlice";
 
 const FavouriteBtn = ({recipe_info}) => {
 
-  const user = useSelector(store => store.user);
+  const user = useSelector(store => store.user.userInfo);
   const [isFav,setIsFav] = useState(false);
   const [favRecipes,setFavRecipes] = useState(null);
   const dispatch = useDispatch();

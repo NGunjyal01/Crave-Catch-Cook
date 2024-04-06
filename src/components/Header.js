@@ -13,7 +13,7 @@ const Header = () => {
     const [isSideMenuOpen,setIsSideMenuOpen] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const user = useSelector(store => store.user);
+    const user = useSelector(store => store.user.userInfo);
 
     const handleSideMenuClick = ()=>{
         setIsSideMenuOpen(true);

@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { API_KEY } from "../utils/constants";
 import { useEffect } from "react";
 import { addRandomRecipes } from "../utils/recipeSlice";
+import { setApiLimitExceed } from "../utils/userSlice";
 
 
 const useRandomRecipes = () => {
@@ -12,9 +13,13 @@ const useRandomRecipes = () => {
     const getRandomRecipes = async()=>{
         const data = await fetch("https://api.spoonacular.com/recipes/random?apiKey="+API_KEY+"&number=15");
         const json = await data.json();
-        if(!json)   return null;
-        const recipesId = json.recipes.map(recipe => recipe.id).join(",");
-        getRecipesInfo(recipesId);
+        if(json.code===402){
+            dispatch(setApiLimitExceed(true));
+        }
+        else{
+            const recipesId = json.recipes.map(recipe => recipe.id).join(",");
+            getRecipesInfo(recipesId);
+        }
     };
 
     const getRecipesInfo = async(recipesId)=>{

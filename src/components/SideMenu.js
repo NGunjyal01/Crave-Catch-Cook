@@ -7,7 +7,7 @@ import { auth } from "../utils/firebase";
 
 const SideMenu = ({setIsSideMenuOpen}) => {
 
-    const user = useSelector(store => store.user);
+    const user = useSelector(store => store.user.userInfo);
 
     useEffect(() => {
         // Disable scrolling on the background when the modal is open
