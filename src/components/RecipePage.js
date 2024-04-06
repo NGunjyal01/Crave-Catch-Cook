@@ -16,7 +16,7 @@ const RecipePage = () => {
 
     const recipeId = useParams().id;
     const [recipeInfo,setRecipeInfo] = useState(null);
-    const info = recipeInfo1.nutrition.nutrients.map(name => name.name).join(",");
+    const info = recipeInfo.nutrition.nutrients.map(name => name.name).join(",");
     console.log(info);
     const getRecipeInformation = async()=>{
         const data = await fetch("https://api.spoonacular.com/recipes/" + recipeId + "/information?apiKey="+ API_KEY + "&includeNutrition=true");
