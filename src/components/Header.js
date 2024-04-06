@@ -6,6 +6,7 @@ import { addUser,removeUser } from "../utils/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {auth}  from "../utils/firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
+import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 
 const Header = () => {
 
@@ -41,18 +42,17 @@ const Header = () => {
                 photoURL: photoURL,
               })
             );
-            // const db = getFirestore();
-            // const docRef = doc(db, "Users",uid);
-            // getDoc(docRef).then((docSnap)=>{
-            //   if(!docSnap.exists()){
-            //     // docSnap.data() will be undefined in this case
-            //     setDoc(docRef,{
-            //       movies:[],
-            //       tvShows:[],
-            //     });
-            //     // console.log("new doc created")
-            //   }
-            // })
+            const db = getFirestore();
+            const docRef = doc(db, "Users",uid);
+            getDoc(docRef).then((docSnap)=>{
+              if(!docSnap.exists()){
+                // docSnap.data() will be undefined in this case
+                setDoc(docRef,{
+                  favRecipes:[]
+                });
+                // console.log("new doc created")
+              }
+            })
             navigate("/");
           } else {
             // User is signed out
