@@ -1,18 +1,27 @@
-import useRandomRecipes from "../hooks/useRandomRecipes";
+import { useEffect } from "react";
 import Carousel from "./Carousel";
-import Footer from "./Footer";
 import MainContainer from "./MainContainer";
+import { getRandomRecipes } from "../services/apis";
+import { useDispatch, useSelector } from "react-redux";
+import Shimmer from "./common/Shimmer";
 
 const Home = () => {
 
-    useRandomRecipes();
+    const randomRecipes = useSelector(store => store.recipes.randomRecipes);
+    const dispatch = useDispatch();
+
+    useEffect(()=>{
+        !randomRecipes.length && getRandomRecipes(dispatch);
+    },[]);
 
     return (
-        <div>
-            <Carousel/>
-            <MainContainer/>
-            <Footer/>
-        </div>
+        <>
+            {!randomRecipes.length ? <Shimmer type={"Home"}/>
+            :<>
+                <Carousel/>
+                <MainContainer/>
+            </>}
+        </>
     )
 }
 

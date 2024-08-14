@@ -18,7 +18,7 @@ const RecipeCard = ({recipe}) => {
     }
 
     return (
-        <div className="bg-[#ACE2E1] m-4 w-full sm:w-[45%] lg:w-[28%] h-[19rem] sm:h-[21rem] lg:h-[28rem] rounded-3xl sm:rounded-[2rem] lg:rounded-[2.5rem] cursor-pointer"
+        <div className="bg-[#ACE2E1] m-4 w-full sm:w-[45%] lg:w-[28%] h-[19rem] sm:h-[21rem] lg:h-[28rem] rounded-3xl sm:rounded-[2rem] lg:rounded-[2.5rem] cursor-pointer shadow-md shadow-gray-300"
         onClick={handleRecipeCardClick}>
             <div className="absolute ml-[78%] lg:ml-[24%] mt-4 z-10"><FavouriteBtn recipe_info={recipe}/></div>
             <img src={image} alt={title+" image"} className="w-full h-[45%] sm:h-[50%] lg:h-[55%] rounded-t-3xl sm:rounded-t-[2rem] lg:rounded-t-[2.5rem] object-cover"/>

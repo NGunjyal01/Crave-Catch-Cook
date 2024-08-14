@@ -3,7 +3,7 @@ import {API_KEY, nutrientsInfo} from "../utils/constants";
 import toast from 'react-hot-toast';
 import RecipeCard from './RecipeCard';
 import DeleteLogo from "../Delete Logo.png";
-import Shimmer from './Shimmer';
+import Shimmer from './common/Shimmer';
 
 const Nutrients = () => {
 
@@ -149,7 +149,7 @@ const Nutrients = () => {
                     {removeBtn && <img src={DeleteLogo} alt='delte logo' onClick={()=>{handleRemoveNutrient(nutrient.name)}} className='w-5 cursor-pointer absolute ml-[17rem] sm:ml-[18rem] lg:ml-[19rem]'/>}
                 </div>)}
             </div>}
-            {loading ? <Shimmer/> : <div className='flex flex-wrap justify-center mt-10 sm:mt-6'>
+            {loading ? <Shimmer type={"SearchPage"}/> : <div className='flex flex-wrap justify-center mt-10 sm:mt-6'>
                 {recipesInfo && recipesInfo.map(recipe => <RecipeCard recipe={recipe}/>)}
             </div>}
         </div>

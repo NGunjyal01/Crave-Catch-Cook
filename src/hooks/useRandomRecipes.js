@@ -17,6 +17,7 @@ const useRandomRecipes = () => {
             dispatch(setApiLimitExceed(true));
         }
         else{
+            console.log('randon recipes',json);
             const recipesId = json.recipes.map(recipe => recipe.id).join(",");
             getRecipesInfo(recipesId);
         }
@@ -25,6 +26,7 @@ const useRandomRecipes = () => {
     const getRecipesInfo = async(recipesId)=>{
         const data = await fetch("https://api.spoonacular.com/recipes/informationBulk?apiKey=" + API_KEY + "&ids=" + recipesId  +"&includeNutrition=true");
         const json = await data.json();
+        console.log(json);
         dispatch(addRandomRecipes(json));
     };
 

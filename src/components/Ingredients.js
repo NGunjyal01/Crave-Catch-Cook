@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { API_KEY } from "../utils/constants";
 import RecipeCard from "./RecipeCard";
-import Shimmer from "./Shimmer";
+import Shimmer from "./common/Shimmer";
 
 const Ingredients = () => {
     const [searchInput,setSearchInput] = useState(''); 
@@ -47,7 +47,7 @@ const Ingredients = () => {
                 <FaSearch className="Logos absolute right-[10%] sm:right-[12%] lg:right-[16%] mt-2.5 lg:mt-4 cursor-pointer" onClick={handleSearch}/>
                 {recipesInfo && <button onClick={handleClearAllBtn} className="absolute right-[7%] mt-14 lg:mt-2 bg-[#41C9E2] sm:px-4 px-2 py-1 text-xs sm:text-base rounded-lg">clear all</button>}
             </div>
-            {loading ? <Shimmer/> : <div className="flex flex-wrap justify-center mt-10">
+            {loading ? <Shimmer type={"SearchPage"}/>  : <div className="flex flex-wrap justify-center mt-10">
                 {recipesInfo && recipesInfo.map(recipe => <RecipeCard recipe={recipe}/>)}
             </div>}
         </>

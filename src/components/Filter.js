@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
-import { sort,mealType,intolerances,cuisines, API_KEY, sortDirection } from "../utils/constants";
+import { useState } from "react";
+import { sort,mealType,intolerances,cuisines, sortDirection } from "../utils/constants";
 import { FaChevronDown } from "react-icons/fa";
 import toast from "react-hot-toast";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { filterSearch } from "../services/apis";
 
-const Filter = ({ searchInput,setIsFilterModalVisible,setLoading,setRecipes }) => {
+const Filter = ({ searchInput,setIsFilterModalVisible,setLoading,setIsResultEmpty }) => {
 
     const [showSortOptions,setShowSortOptions] = useState(false);
     const [sortOption,setSortOption] = useState("Select");
@@ -14,6 +15,7 @@ const Filter = ({ searchInput,setIsFilterModalVisible,setLoading,setRecipes }) =
     const [selectedCuisines,setSelectedCuisines] = useState(cuisines);
     const [sortOrder,setSortOrder] = useState(sortDirection);
 
+    const dispatch = useDispatch();
     const dishName = useSelector(store => store.recipes.dishName);
 
     const handleSelectClick = ()=>{
@@ -70,7 +72,6 @@ const Filter = ({ searchInput,setIsFilterModalVisible,setLoading,setRecipes }) =
 
     const handleFilterModalClose = ()=>{
         setIsFilterModalVisible(false);
-        setRecipes(dishName);
     }
 
     const handleSortOrder = ()=>{
@@ -103,8 +104,7 @@ const Filter = ({ searchInput,setIsFilterModalVisible,setLoading,setRecipes }) =
                 else{
                     filterInput+="desc";
                 }
-            }
-                
+            }      
         })
         selectedMealType.map(type=>{
             if(type.want)
@@ -120,11 +120,18 @@ const Filter = ({ searchInput,setIsFilterModalVisible,setLoading,setRecipes }) =
         else{
             setIsFilterModalVisible(false);
             setLoading(true);
-            toast.success("Changes Applied");
-            const data = await fetch("https://api.spoonacular.com/recipes/complexSearch?apiKey="+API_KEY+"&query="+searchInput+"&number=20&addRecipeInformation=true&addRecipeNutrition=true"+filterInput);
-            const json = await data.json();
-            setRecipes(json.results);
-            setLoading(false);
+            try{
+                const result = await filterSearch(searchInput,filterInput,dispatch);
+                if(!result){
+                    setIsResultEmpty(true);
+                }
+            }
+            catch(error){
+                console.log("ERROR DURING SEARCH ITEMS BY DISH NAME...............",error);
+            }
+            finally{
+                setLoading(false); 
+            }
         }
     }
 
