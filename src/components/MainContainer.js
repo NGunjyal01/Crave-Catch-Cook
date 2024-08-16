@@ -7,10 +7,12 @@ const MainContainer = () => {
     const randomRecipes = useSelector(store => store.recipes.randomRecipes);
     
     return (
-        <div>
-            <h1 className="text-lg sm:text-4xl font-bold flex justify-center mt-10 sm:mt-16">Simple And Tasty Popular Recipes</h1>
-            <div className="flex flex-wrap justify-center sm:mt-10 mt-5">
-                {randomRecipes.map(recipe => <RecipeCard recipe={recipe}/>)}
+        <div className="flex flex-col items-center">
+            <h1 className="text-lg sm:text-4xl font-bold mt-10 sm:mt-16">Simple And Tasty Popular Recipes</h1>
+            <div className="grid grid-cols-3 sm:mt-10 mt-5">
+                {randomRecipes.map(recipe => <div className="col-span-1">
+                    <RecipeCard recipe={recipe}/>
+                </div>)}
             </div>
         </div>
     )

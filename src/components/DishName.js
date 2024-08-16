@@ -61,7 +61,7 @@ const DishName = () => {
                     : <FaSearch className="Logos" onClick={handleSearch}/>}
                 </div>
             </div>
-            {showSearchResults && <button onClick={handleToggleFilterBtn} 
+            {(showSearchResults && !loading) && <button onClick={handleToggleFilterBtn} 
             className="absolute right-[9%] mt-3 bg-[#41C9E2] sm:px-4 px-2 py-1 text-xs sm:text-base rounded-lg">
                 filter
             </button>}

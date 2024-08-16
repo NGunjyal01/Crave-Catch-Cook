@@ -126,7 +126,7 @@ const Nutrients = () => {
     }
     
     return (
-        <div className='mt-10'>
+        <div className='mt-10 min-h-screen'>
             <div className='lg:flex justify-center lg:mt-16 mx-5'>
                 <h1 className='lg:text-xl font-bold flex justify-center'>Provide The Range of Nutrients you want ( Per Serving )</h1>
                 {!recipesInfo && <div className='flex mt-5 lg:mt-0 justify-center'>

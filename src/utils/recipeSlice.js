@@ -6,6 +6,8 @@ const recipeSlice = createSlice({
     name:"recipes",
     initialState:{
         randomRecipes: recipes ? recipes.randomRecipes ? recipes.randomRecipes : [] : [],
+        recipeInfo: recipes ? recipes.recipeInfo ? recipes.recipeInfo : {} : {},
+        similarRecipes: recipes ? recipes.similarRecipes ? recipes.similarRecipes : [] : [],
         dishName: recipes ? recipes.dishName ? recipes.dishName : [] : [],
         ingredients: recipes ? recipes.ingredients ? recipes.ingredients : [] : [],
         nutrients: recipes ? recipes.nutrients ? recipes.nutrients : [] : [],
@@ -13,6 +15,18 @@ const recipeSlice = createSlice({
     reducers:{
         addRandomRecipes: (state,action)=>{
             state.randomRecipes = action.payload;
+        },
+        setRecipeInfo: (state,action)=>{
+            state.recipeInfo = action.payload;
+        },
+        removeRecipeInfo: (state,action)=>{
+            state.recipeInfo = {};
+        },
+        setSimilarRecipes : (state,action)=>{
+            state.similarRecipes = action.payload;
+        },
+        removeSimilarRecipes : (state,action)=>{
+            state.similarRecipes = [];
         },
         addRecipeByDishName: (state,action) =>{
             state.dishName = action.payload;  
@@ -35,6 +49,7 @@ const recipeSlice = createSlice({
     },
 });
 
-export const { addRandomRecipes,addRecipeByDishName,removeRecipeByDishName,addRecipeByIngredients,removeRecipeByIngredients,addRecipeByNutrients,removeRecipeByNutrients} = recipeSlice.actions;
+export const { addRandomRecipes,setRecipeInfo,removeRecipeInfo,addRecipeByDishName,removeRecipeByDishName, setSimilarRecipes, removeSimilarRecipes,
+    addRecipeByIngredients,removeRecipeByIngredients,addRecipeByNutrients,removeRecipeByNutrients} = recipeSlice.actions;
 
 export default recipeSlice.reducer;

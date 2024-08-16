@@ -1,38 +1,41 @@
-import { API_KEY } from "../utils/constants"
 import { useEffect, useState } from "react";
 import RecipeCard from "./RecipeCard";
+import { useDispatch, useSelector } from "react-redux";
+import { getSimilarRecipes } from "../services/apis";
 
 const SimilarRecipes = ({ recipeId }) => {
 
-    const [similarRecipesId,setSimilarReciesId] = useState(null);
-    const [similarRecipesInfo,setSimilarRecipesInfo] = useState(null);
-
-    const getSimilarRecipesId = async()=>{
-        const data = await fetch("https://api.spoonacular.com/recipes/" + recipeId +"/similar?apiKey="+API_KEY + "&number=10");
-        const json = await data.json();
-        const similarId = json.map(recipe => recipe.id).join(",");
-        setSimilarReciesId(similarId);
-        console.log(similarRecipesId)
-    }
-    const getSimilarRecipesInfo = async()=>{
-        const data = await fetch("https://api.spoonacular.com/recipes/informationBulk?apiKey=" + API_KEY + "&ids=" + similarRecipesId  +"&includeNutrition=true");
-        const json = await data.json();
-        setSimilarRecipesInfo(json);
-    }
+    const similarRecipes = useSelector(store => store.recipes.similarRecipes);
+    const [isResultEmpty,setIsResultEmpty] = useState(false);
+    const dispatch = useDispatch();
 
     useEffect(()=>{
-        getSimilarRecipesId();
-        getSimilarRecipesInfo();
+        const fetch = async()=>{
+            try{
+                const result = await getSimilarRecipes(recipeId,dispatch);
+                if(!result){
+                    setIsResultEmpty(true);
+                }
+            }
+            catch(error){
+                console.log("ERROR DURING SEARCH ITEMS BY DISH NAME...............",error);
+            }
+        }
+        fetch();
     },[recipeId]);
     
 
     return (
-    <div>
-        <h1 className='font-semibold text-2xl mt-10'>Similar Recipes</h1> 
-        <div className="flex flex-wrap justify-center">
-            {similarRecipesInfo && similarRecipesInfo.map(recipeInfo => <RecipeCard recipe={recipeInfo}/>)}
-        </div>
-    </div>
+        <>
+            {!isResultEmpty && <div className="w-full">
+                <h1 className='font-bold text-3xl mt-14'>Similar Recipes</h1> 
+                <div className="grid grid-cols-3 mt-5">
+                    {similarRecipes.map(recipeInfo => <div className="col-span-1">
+                        <RecipeCard recipe={recipeInfo}/>
+                    </div>)}
+                </div>
+            </div>}
+        </>
     )
 }
 

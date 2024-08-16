@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
 import { API_KEY } from "../utils/constants";
-import { addRandomRecipes, addRecipeByDishName } from "../utils/recipeSlice";
+import { addRandomRecipes, addRecipeByDishName, addRecipeByIngredients, setRecipeInfo, setSimilarRecipes } from "../utils/recipeSlice";
 import { setApiLimitExceed } from "../utils/userSlice";
 
 export async function getRandomRecipes(dispatch){
@@ -12,7 +12,7 @@ export async function getRandomRecipes(dispatch){
         }
         else{
             const recipesId = json.recipes.map(recipe => recipe.id).join(",");
-            getRecipesInfo(recipesId,dispatch);
+            getAllRecipesInfo(recipesId,dispatch);
         }
     }
     catch(error){
@@ -20,7 +20,7 @@ export async function getRandomRecipes(dispatch){
     }
 };
 
-const getRecipesInfo = async(recipesId,dispatch)=>{
+const getAllRecipesInfo = async(recipesId,dispatch)=>{
     try{
         const data = await fetch("https://api.spoonacular.com/recipes/informationBulk?apiKey=" + API_KEY + "&ids=" + recipesId  +"&includeNutrition=true");
         const json = await data.json();
@@ -69,5 +69,66 @@ export async function filterSearch(searchInput,filterInput,dispatch){
     }
     catch(error){
         console.log("ERROR DURING SEARCH ITEMS BY DISH NAME............",error);
+    }
+}
+
+export async function searchItemsByIngredients(searchInput,dispatch){
+    try{
+        const data1 = await fetch("https://api.spoonacular.com/recipes/findByIngredients?apiKey="+API_KEY+"&ingredients="+searchInput+"&number=20&ignorePantry=true");
+        const json1 = await data1.json();
+        if(json1.code===402){
+            dispatch(setApiLimitExceed(true));
+        }
+        else if(json1.length===0)  return false;
+        const recipesId =  json1.map(recipe => recipe.id).join(",");
+        const data2 = await fetch("https://api.spoonacular.com/recipes/informationBulk?apiKey=" + API_KEY + "&ids=" + recipesId  +"&includeNutrition=true");
+        const json2 = await data2.json();
+        if(json2.code===402){
+            dispatch(setApiLimitExceed(true));
+        }
+        console.log("SEARCH ITEMS BY INGREDIENTS API RESPONSE.................",json2);
+        dispatch(addRecipeByIngredients(json2));
+        return true;
+    }
+    catch(error){
+        console.log("ERROR DURING SEARCH ITEMS BY INGREDIENTS..................",error);
+    }
+}
+
+export async function getRecipeInfo(recipeId,dispatch){
+    try{
+        const data = await fetch("https://api.spoonacular.com/recipes/" + recipeId + "/information?apiKey="+ API_KEY + "&includeNutrition=true");
+        const json = await data.json();
+        if(json.code===402){
+            dispatch(setApiLimitExceed(true));
+        }
+        console.log("RECIPE INFO API RESPONSE..................",json);
+        dispatch(setRecipeInfo(json));
+    }
+    catch(error){
+        console.log("ERROR DURING RECIPE INFO API................",error);
+    }
+}
+
+export async function getSimilarRecipes(recipeId,dispatch){
+    try{
+        const data1 = await fetch("https://api.spoonacular.com/recipes/" + recipeId +"/similar?apiKey="+ API_KEY + "&number=10");
+        const json1 = await data1.json();
+        if(json1.code===402){
+            dispatch(setApiLimitExceed(true));
+        }
+        else if(json1.length===0)  return false;
+        const similarRecipesId  = json1.map(recipe => recipe.id).join(",");
+        const data2 = await fetch("https://api.spoonacular.com/recipes/informationBulk?apiKey=" + API_KEY + "&ids=" + similarRecipesId  +"&includeNutrition=true");
+        const json2 = await data2.json();
+        if(json2.code===402){
+            dispatch(setApiLimitExceed(true));
+        }
+        dispatch(setSimilarRecipes(json2));
+        console.log("SIMILAR RECIPES API RESPONSE.............................",json2);
+        return true;
+    }
+    catch(error){
+        console.log("ERROR DURING SIMILAR RECIPES API........................",error);
     }
 }
