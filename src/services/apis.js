@@ -2,6 +2,7 @@ import toast from "react-hot-toast";
 import { API_KEY } from "../utils/constants";
 import { addRandomRecipes, addRecipeByDishName, addRecipeByIngredients, setRecipeInfo, setSimilarRecipes } from "../utils/recipeSlice";
 import { setApiLimitExceed } from "../utils/userSlice";
+import SimilarRecipes from "../components/SimilarRecipes";
 
 export async function getRandomRecipes(dispatch){
     try{
@@ -104,6 +105,8 @@ export async function getRecipeInfo(recipeId,dispatch){
         }
         console.log("RECIPE INFO API RESPONSE..................",json);
         dispatch(setRecipeInfo(json));
+        const recipes = JSON.parse(localStorage.getItem('recipes'));
+        localStorage.setItem('recipes',JSON.stringify({...recipes,recipeInfo:json}));
     }
     catch(error){
         console.log("ERROR DURING RECIPE INFO API................",error);
@@ -125,6 +128,8 @@ export async function getSimilarRecipes(recipeId,dispatch){
             dispatch(setApiLimitExceed(true));
         }
         dispatch(setSimilarRecipes(json2));
+        const recipes = JSON.parse(localStorage.getItem('recipes'));
+        localStorage.setItem('recipes',JSON.stringify({...recipes,SimilarRecipes:json2}));
         console.log("SIMILAR RECIPES API RESPONSE.............................",json2);
         return true;
     }

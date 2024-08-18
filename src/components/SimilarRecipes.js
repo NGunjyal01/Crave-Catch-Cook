@@ -27,8 +27,8 @@ const SimilarRecipes = ({ recipeId }) => {
 
     return (
         <>
-            {!isResultEmpty && <div className="w-full">
-                <h1 className='font-bold text-3xl mt-14'>Similar Recipes</h1> 
+            {!isResultEmpty && <div className="">
+                <h1 className='font-bold text-3xl mt-14 ml-[5%]'>Similar Recipes</h1> 
                 <div className="grid grid-cols-3 mt-5">
                     {similarRecipes.map(recipeInfo => <div className="col-span-1">
                         <RecipeCard recipe={recipeInfo}/>

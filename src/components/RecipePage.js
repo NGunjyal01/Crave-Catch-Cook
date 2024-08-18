@@ -13,6 +13,7 @@ import dairyFreeLogo from "../Dairy Free Logo.png";
 import { getRecipeInfo } from '../services/apis';
 import { useDispatch, useSelector } from 'react-redux';
 import Shimmer from './common/Shimmer';
+import { removeRecipeInfo, removeSimilarRecipes } from '../utils/recipeSlice';
 
 
 const SimilarRecipes = lazy(()=> import('./SimilarRecipes'));
@@ -27,8 +28,20 @@ const RecipePage = () => {
     // console.log(info);
 
     useEffect(()=>{
-        getRecipeInfo(recipeId,dispatch)
-        .then(()=>setLoading(false));
+        if(Object.keys(recipeInfo).length===0){
+            setLoading(true);
+            console.log('loading new page..............................',loading);
+            getRecipeInfo(recipeId,dispatch)
+            .then(()=>{
+                setLoading(false);
+                console.log('loading new page..............................',loading);
+            });
+        }
+
+        return()=>{
+            dispatch(removeRecipeInfo());
+            dispatch(removeSimilarRecipes());
+        }
     },[recipeId]);
 
     const {
@@ -57,45 +70,45 @@ const RecipePage = () => {
         <>
             {loading ? <Shimmer type={"RecipePage"}/>
             :<div className='grid place-items-center lg:mt-[10%] mt-[30%]'>
-                <div className='w-[80%]'>
+                <div className='w-[90%] sm:w-[80%]'>
                     {/* Section 1 */}
                     <h1 className='flex justify-center mb-5 text-2xl lg:text-4xl font-bold'>{title}</h1>
-                    <div className='grid grid-cols-12 mt-10  relative'>
+                    <div className='grid grid-cols-12 mt-10 relative'>
                         <img src={image} alt={title+" img"} 
-                        className='col-span-5 w-full shadow-lg shadow-gray-700 rounded-lg lg:hover:scale-95 transition-transform ease-in-out'/>
-                        <div className='col-span-7 grid grid-cols-12 ml-40 mt-5'>
-                            <div className='col-span-6 flex items-center justify-between bg-gray-100 px-4 w-[90%] max-h-14 rounded-lg shadow-sm shadow-gray-700'>
+                        className='col-span-full sm:col-span-5 w-full shadow-lg shadow-gray-700 rounded-lg lg:hover:scale-95 transition-transform ease-in-out'/>
+                        <div className='col-span-full sm:col-span-7 grid grid-cols-12 sm:ml-40 mt-10 sm:mt-5'>
+                            <div className='col-span-6 flex items-center justify-between bg-gray-100 px-4 w-[90%] h-10 sm:max-h-14 rounded-lg shadow-sm shadow-gray-700'>
                                 <BiSolidDish className='Logos'/>
                                 <h1 className='text-sm lg:text-lg'>{servings + " servings"}</h1>
                             </div>
-                            <div className='col-span-6 flex items-center justify-between bg-gray-100 px-4 w-[90%] max-h-14 rounded-lg shadow-sm shadow-gray-700'>
+                            <div className='col-span-6 flex items-center justify-between bg-gray-100 px-4 w-[90%] h-10 sm:max-h-14 rounded-lg shadow-sm shadow-gray-700'>
                                 <img src={caloriesLogo} alt='calories img' className='w-5 lg:w-8 object-contain'/>
                                 <h1 className='text-sm lg:text-lg'>126kcal</h1>
                             </div>
-                            <div className='col-span-6 flex items-center justify-between bg-gray-100 px-4 w-[90%] max-h-14 rounded-lg shadow-sm shadow-gray-700'>
+                            <div className='col-span-6 flex items-center justify-between bg-gray-100 px-4 w-[90%] h-10 sm:max-h-14 rounded-lg shadow-sm shadow-gray-700'>
                                 <IoMdAlarm className='Logos'/>
                                 <h1 className='hidden lg:block'>{"Prepation Time "+readyInMinutes+"min"}</h1>
                                 <h1 className='block lg:hidden text-sm'>{readyInMinutes+"min"}</h1>
                             </div>
-                            <div className='col-span-6 flex items-center justify-between bg-gray-100 px-4 w-[90%] max-h-14 rounded-lg shadow-sm shadow-gray-700'>
+                            <div className='col-span-6 flex items-center justify-between bg-gray-100 px-4 w-[90%] h-10 sm:max-h-14 rounded-lg shadow-sm shadow-gray-700'>
                                 <AiFillDollarCircle className='Logos'/>
                                 <h1 className='hidden lg:block'>{"$"+pricePerServing + " per Serving"}</h1>
                                 <h1 className='block lg:hidden text-sm'>{"$"+pricePerServing}</h1>
                             </div>
-                            <div className='col-span-6 flex items-center justify-between bg-gray-100 px-4 w-[90%] max-h-14 rounded-lg shadow-sm shadow-gray-700'>
+                            <div className='col-span-6 flex items-center justify-between bg-gray-100 px-4 w-[90%] h-10 sm:max-h-14 rounded-lg shadow-sm shadow-gray-700'>
                                 <img src={vegetarain ? vegLogo : nonVegLogo} className='w-5 lg:w-8 object-contain'/>
                                 <h1 className='hidden lg:block'>{vegetarain?"Vegetarain":"Non-Vegetarain"}</h1>
                                 <h1 className='block lg:hidden text-sm'>{vegetarain?"Veg":"Non-Veg"}</h1>
                             </div>
-                            {vegan && <div className='col-span-6 flex items-center justify-between bg-gray-100 px-4 w-[90%] max-h-14 rounded-lg shadow-sm shadow-gray-700'>
+                            {vegan && <div className='col-span-6 flex items-center justify-between bg-gray-100 px-4 w-[90%] h-10 sm:max-h-14 rounded-lg shadow-sm shadow-gray-700'>
                                 <img src={veganLogo} alt='vegan logo' className='w-5 lg:w-8 object-contain'/>
                                 <h1 className='text-sm lg:text-lg'>Vegan</h1>
                             </div>}
-                            {glutenFree && <div className='col-span-6 flex items-center justify-between bg-gray-100 px-4 w-[90%] max-h-14 rounded-lg shadow-sm shadow-gray-700'>
+                            {glutenFree && <div className='col-span-6 flex items-center justify-between bg-gray-100 px-4 w-[90%] h-10 sm:max-h-14 rounded-lg shadow-sm shadow-gray-700'>
                                 <img src={glutenFreeLogo} alt='gluten free logo' className='w-5 lg:w-8 object-contain'/>
                                 <h1 className='text-sm lg:text-lg'>Gluten Free</h1>    
                             </div>}
-                            {dairyFree && <div className='col-span-6 flex items-center justify-between bg-gray-100 px-4 w-[90%] max-h-14 rounded-lg shadow-sm shadow-gray-700'>
+                            {dairyFree && <div className='col-span-6 flex items-center justify-between bg-gray-100 px-4 w-[90%] h-10 sm:max-h-14 rounded-lg shadow-sm shadow-gray-700'>
                                 <img src={dairyFreeLogo} alt='dairy free logo' className='w-5 lg:w-8 object-contain'/>
                                 <h1 className='text-sm lg:text-lg'>Dairy Free</h1>
                             </div>}
@@ -140,10 +153,12 @@ const RecipePage = () => {
                         <h1 className='my-3'>{"Source Name - " + sourceName}</h1>
                         <h1>Source Url - <a href={sourceUrl}>{sourceUrl}</a></h1>
                     </div>
-                    <Suspense fallback={<div className='text-3xl font-bold mt-[10%] ml-[20%]'>Loading123.....</div>}>
-                        <SimilarRecipes recipeId={recipeId}/>
-                    </Suspense>
                 </div>
+                <Suspense fallback={<Shimmer type={"SearchPage"}/>}>
+                    <div className='w-[95%]'>
+                        <SimilarRecipes recipeId={recipeId}/>
+                    </div>
+                </Suspense>
             </div>}
         </>
     )

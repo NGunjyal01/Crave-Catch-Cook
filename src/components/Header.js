@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {auth}  from "../utils/firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+import AnimatedHamburgerButton from "./common/AnimatedHamburgerButton";
 
 const Header = () => {
 
@@ -20,13 +21,13 @@ const Header = () => {
     };
     
     const handleSignOut = () => {
-        signOut(auth)
-        .then(() => {
-            // Sign-out successful.
-        })
-        .catch((error) => {
-            // An error happened.
-        });
+      signOut(auth)
+      .then(() => {
+          // Sign-out successful.
+      })
+      .catch((error) => {
+          // An error happened.
+      });
     };
 
     useEffect(() => {
@@ -62,26 +63,24 @@ const Header = () => {
         });
     
         return () => unsubscribe();
-      }, []);
-
-
+    }, []);
 
     return (
-        <>
-            <div className="fixed z-20 w-full top-0 flex bg-[#ACE2E1] lg:py-7 p-4 text-gray-800">
-                <h1 className="sm:ml-[5%] sm:text-lg lg:text-2xl font-bold font-serif">Crave Catch Cook</h1>
-                <div className="ml-[20%] hidden lg:flex lg:space-x-4 mr-7 sm:text-sm lg:text-lg">
-                    <NavLink to={"/"}>Home</NavLink>
-                    <NavLink to={"/recipes"}>Recipes</NavLink>
-                    <NavLink to={"/favourites"}>Favourites</NavLink>
-                    <NavLink to={"/yourAccount"}>Your Account</NavLink>
-                </div>
-                <RxHamburgerMenu className="lg:hidden ml-[45%] sm:ml-[70%]" onClick={handleSideMenuClick} size={20}/>
-                {!user && <Link to={"/authentication"} className="hidden lg:block ml-[25%] sm:text-sm lg:text-lg">Login/SignUp</Link>}
-                {user && <button onClick={handleSignOut} className="hidden lg:block ml-[25%] sm:text-sm lg:text-lg">Signout</button>}
-            </div>
-            {isSideMenuOpen && <SideMenu setIsSideMenuOpen={setIsSideMenuOpen}/>}
-        </>
+      <>
+        <div className="fixed top-0 w-full z-40 flex bg-[#ACE2E1] text-gray-800 py-5 sm:pt-10 sm:pb-5">
+          <h1 className="ml-[30%] sm:ml-[5%] sm:text-lg lg:text-2xl font-bold font-serif whitespace-nowrap">Crave Catch Cook</h1>
+          <div className="ml-[20%] hidden lg:flex lg:space-x-4 mr-7 sm:text-sm lg:text-lg">
+            <NavLink to={"/"}>Home</NavLink>
+            <NavLink to={"/recipes"}>Recipes</NavLink>
+            <NavLink to={"/favourites"}>Favourites</NavLink>
+            <NavLink to={"/yourAccount"}>Your Account</NavLink>
+          </div>
+          <RxHamburgerMenu className="lg:hidden ml-[45%] sm:ml-[70%]" onClick={handleSideMenuClick} size={20}/>
+          {!user && <Link to={"/authentication"} className="hidden lg:block ml-[25%] sm:text-sm lg:text-lg">Login/SignUp</Link>}
+          {user && <button onClick={handleSignOut} className="hidden lg:block ml-[25%] sm:text-sm lg:text-lg">Signout</button>}
+        </div>
+        <AnimatedHamburgerButton/>
+      </>
     )
 }
 

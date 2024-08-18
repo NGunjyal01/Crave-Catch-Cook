@@ -23,25 +23,25 @@ const Shimmer = ({type}) => {
                             <div className="bg-gray-200 h-80 rounded-lg"/>
                         </div>
                         <div className="col-span-7 grid grid-cols-12 ml-40 mt-5 gap-5">
-                            {Array(4).fill("").map((_, index) => (<div key={index} className="bg-gray-200 h-14 w-full rounded-lg col-span-6"/>))}
+                            {Array(6).fill("").map((_, index) => (<div key={index} className="bg-gray-200 h-14 w-full rounded-lg col-span-6"/>))}
                         </div>
                     </div>
                     {/* Summary Shimmer */}
-                    <div className="bg-gray-200 h-24 mt-10 rounded-lg"/>
+                    <div className="bg-gray-200 h-40 mt-10 rounded-lg"/>
 
                     {/* Ingredients Shimmer */}
                     <div className="mt-10 grid grid-cols-12 gap-5">
-                        {Array(6).fill("").map((_, index) => (<div key={index} className="bg-gray-200 h-32 w-full rounded-lg col-span-6 lg:col-span-2"/>))}
+                        {Array(10).fill("").map((_, index) => (<div key={index} className="bg-gray-200 h-56 w-full rounded-lg col-span-6 lg:col-span-2"/>))}
                     </div>
 
                     {/* Steps Shimmer */}
                     <div className="mt-16">
-                        {Array(5).fill("").map((_, index) => (<div key={index} className="bg-gray-200 h-8 w-full rounded-lg mt-4"/>))}
+                        {Array(10).fill("").map((_, index) => (<div key={index} className="bg-gray-200 h-10 w-full rounded-lg mt-4"/>))}
                     </div>
 
                     {/* Nutritional Info Shimmer */}
                     <div className="mt-16">
-                        {Array(6).fill("").map((_, index) => (<div key={index} className="bg-gray-200 h-6 w-full rounded-lg mt-4"/>))}
+                        {Array(10).fill("").map((_, index) => (<div key={index} className="bg-gray-200 h-8 w-[60%] rounded-lg mt-4"/>))}
                     </div>
                 </div>
             </div> )}

@@ -31,7 +31,7 @@ const Carousel = () => {
     },[currentIndex]);
 
     return (
-        <div className="mt-[28%] sm:mt-[13%] lg:mt-[10%] flex justify-center">
+        <div className="mt-[22%] sm:mt-[13%] lg:mt-[10%] flex justify-center">
             <div className="absolute top-[55%] sm:max-lg:top-[40%] -left-2 sm:left-0 lg:left-4 cursor-pointer">
                 <BsChevronCompactLeft size={35} onClick={prevSlide}/>
             </div>
