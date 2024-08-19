@@ -1,6 +1,7 @@
 import toast from 'react-hot-toast';
 import { account, ID } from '../lib/appwrite';
 import { addUser, removeUser } from '../utils/userSlice';
+import { resetFavRecipes } from '../utils/favRecipesSlice';
 
 export async function signUp({email,password,name},dispatch,navigate){
     const toastId = toast.loading('Loading...');
@@ -29,6 +30,7 @@ export async function login(email,password,dispatch,navigate){
         const user = await account.get();
         console.log("LOGIN API RESPONSE.....................",response);
         dispatch(addUser(user));
+        localStorage.setItem('user',JSON.stringify(user));
         toast.success('Successfully Logged In');
         navigate('/');
     }
@@ -50,11 +52,16 @@ export async function logout(dispatch,navigate) {
     try{
         const response = await account.deleteSession('current');
         console.log("LOGOUT API RESPONSE.................",response);
+        toast.success('LogOut');
+        localStorage.removeItem('user');
         dispatch(removeUser());
+        dispatch(resetFavRecipes());
+        localStorage.removeItem('favRecipes');
         navigate('/');
     }
     catch(error){
         console.log("ERROR DURING LOGOUT API...............",error);
+        toast.error('Error During Logout')
     }
     toast.dismiss(toastId);
 }

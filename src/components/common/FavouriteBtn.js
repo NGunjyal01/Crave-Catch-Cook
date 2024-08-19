@@ -2,59 +2,48 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { IoHeartOutline,IoHeartSharp } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
-import { getFirestore,doc,updateDoc,arrayUnion,getDoc, arrayRemove } from "firebase/firestore";
-import { addFavRecipes } from "../../utils/favRecipesSlice";
+import { addFavRecipe, removeFavRecipe } from "../../services/DBAPI";
 
 const FavouriteBtn = ({recipe_info}) => {
 
   const user = useSelector(store => store.user.userInfo);
   const [isFav,setIsFav] = useState(false);
-  const [favRecipes,setFavRecipes] = useState(null);
+  const favRecipes = useSelector(store => store.favRecipes);
   const dispatch = useDispatch();
 
-  // const db = getFirestore();
-  // useEffect(()=>{
-  //   if(!user) return;
-  //   const docRef = doc(db, "Users", user.uid);
-  //   getDoc(docRef).then((docSnap)=>{
-  //     if (docSnap.exists()) {
-  //       const recipes = docSnap.data().favRecipes;
-  //       setFavRecipes(recipes);
-  //       dispatch(addFavRecipes(recipes));
-  //       if(recipes?.find(obj => obj.id===recipe_info.id)){
-  //         setIsFav(true);
-  //       }
-  //     }
-  //   })
-  // },[user,favRecipes]);
+  useEffect(()=>{
+    if(!user){
+      setIsFav(false);
+      return;
+    }
+    if(favRecipes && favRecipes.filter(recipe => parseInt(recipe.recipeId)===recipe_info.id).length===1){
+      setIsFav(true);
+    }
+  },[user,favRecipes]);
 
   const handleBtnClick = async(event)=>{
-    // event.stopPropagation();
-    // if(!user){
-    //   return toast.error("Login Required")
-    // }
-    // if(!isFav){
-    //   if(!favRecipes?.find(obj => obj.id===recipe_info.id)){
-    //     const docRef = doc(db, "Users", user.uid);
-    //     await updateDoc(docRef, {
-    //       favRecipes: arrayUnion(recipe_info)
-    //     });
-    //     setFavRecipes(null);
-    //     return toast.success('Added To Your Favourites');
-    //   }
-    // }
-    // else{
-    //   const docRef = doc(db, "Users", user.uid);
-    //   await updateDoc(docRef, {
-    //     favRecipes: arrayRemove(recipe_info)
-    //   });
-    //   setIsFav(false);
-    //   return toast.success('Successfully Removed From Favourites');
-    // }
+    const formData = new FormData();
+    formData.append('recipeId',recipe_info.id);
+    formData.append('recipeInfo',JSON.stringify(recipe_info));
+    formData.append('createdAt',new Date().toISOString());
+    event.stopPropagation();
+    if(!user){
+      return toast.error("Login Required")
+    }
+    if(!isFav){
+      addFavRecipe(formData,dispatch).then(()=>setIsFav(true));  
+    }
+    else{
+      removeFavRecipe(JSON.stringify(recipe_info.id),dispatch).then(()=>{
+        setIsFav(false);
+      });
+    }
   }
 
   return (
-    <button className="bg-white p-2 rounded-full" onClick={handleBtnClick}>{!isFav?<IoHeartOutline className="Logos"/>:<IoHeartSharp className="Logos"/>}</button>
+    <button className="bg-white p-2 rounded-full" onClick={handleBtnClick}>
+      {!isFav?<IoHeartOutline className="Logos"/>:<IoHeartSharp className="Logos"/>}
+    </button>
   )
 }
 

@@ -54,12 +54,15 @@ const Ingredients = () => {
                     : <FaSearch className="Logos" onClick={handleSearch}/>}
                 </div>
             </div>
-            {showSearchResults && (loading ? <div className="w-full">
+            {showSearchResults && (loading ? <div className="w-[90%] mt-10">
                 <Shimmer type={"SearchPage"}/>
             </div>
             : <div className="flex flex-wrap justify-center mt-10 sm:mt-14 lg:mt-6">
                 {isResultEmpty ? <h1 className="uppercase text-2xl font-semibold tracking-widest mt-[50%]">No Dishes Found</h1>
-                :recipes.map((recipe)=><RecipeCard recipe={recipe}/>)}
+                :<div className="grid grid-cols-3 w-[90%] mt-10 sm:mt-14 lg:mt-10">
+                    {isResultEmpty ? <h1 className="col-span-full uppercase text-2xl mt-24 font-semibold tracking-widest text-center">No Dishes Found</h1>
+                    : recipes.map((recipe)=><div className="col-span-full sm:col-span-1"><RecipeCard recipe={recipe}/></div>)}
+                </div>}
             </div>)}
         </div>
     )

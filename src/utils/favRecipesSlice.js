@@ -4,13 +4,16 @@ const favRecipes = localStorage.getItem('favRecipes') ? JSON.parse(localStorage.
 
 const favRecipesSlice = createSlice({
     name: "favRecipes",
-    initialState: favRecipes ? favRecipes : [],
+    initialState: favRecipes ? favRecipes : null,
     reducers:{ 
-        addFavRecipes: (state,action)=>{
+        setFavRecipes: (state,action)=>{
             return action.payload;
         },
+        resetFavRecipes: (state,action)=>{
+            return null;
+        }
     }
 })
 
-export const {addFavRecipes} = favRecipesSlice.actions;
+export const { setFavRecipes,resetFavRecipes } = favRecipesSlice.actions;
 export default favRecipesSlice.reducer;
