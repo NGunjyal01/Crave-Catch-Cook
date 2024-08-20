@@ -5,12 +5,9 @@ const recipes = localStorage.getItem('recipes') ? JSON.parse(localStorage.getIte
 const recipeSlice = createSlice({
     name:"recipes",
     initialState:{
-        randomRecipes: recipes ? recipes.randomRecipes ? recipes.randomRecipes : [] : [],
-        recipeInfo: recipes ? recipes.recipeInfo ? recipes.recipeInfo : {} : {},
-        similarRecipes: recipes ? recipes.similarRecipes ? recipes.similarRecipes : [] : [],
-        dishName: recipes ? recipes.dishName ? recipes.dishName : [] : [],
-        ingredients: recipes ? recipes.ingredients ? recipes.ingredients : [] : [],
-        nutrients: recipes ? recipes.nutrients ? recipes.nutrients : [] : [],
+        randomRecipes: recipes ? recipes.randomRecipes || [] : [],
+        recipeInfo: recipes ? recipes.recipeInfo || {} : {},
+        similarRecipes: recipes ? recipes.similarRecipes || [] : [],
     },
     reducers:{
         addRandomRecipes: (state,action)=>{
@@ -28,28 +25,9 @@ const recipeSlice = createSlice({
         removeSimilarRecipes : (state,action)=>{
             state.similarRecipes = [];
         },
-        addRecipeByDishName: (state,action) =>{
-            state.dishName = action.payload;  
-        },
-        removeRecipeByDishName: (state,action) =>{
-            state.dishName = [];
-        },
-        addRecipeByIngredients: (state,action)=>{
-            state.ingredients = action.payload;
-        },
-        removeRecipeByIngredients: (state,action)=>{
-            state.ingredients = [];
-        },
-        addRecipeByNutrients: (state,action)=>{
-            state.nutrients = action.payload;
-        },
-        removeRecipeByNutrients: (state)=>{
-            state.nutrients = [];
-        },
     },
 });
 
-export const { addRandomRecipes,setRecipeInfo,removeRecipeInfo,addRecipeByDishName,removeRecipeByDishName, setSimilarRecipes, removeSimilarRecipes,
-    addRecipeByIngredients,removeRecipeByIngredients,addRecipeByNutrients,removeRecipeByNutrients} = recipeSlice.actions;
+export const { addRandomRecipes,setRecipeInfo,removeRecipeInfo,addRecipeByDishName,removeRecipeByDishName, setSimilarRecipes, removeSimilarRecipes} = recipeSlice.actions;
 
 export default recipeSlice.reducer;

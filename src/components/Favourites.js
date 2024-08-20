@@ -9,7 +9,7 @@ const Favourites = () => {
     const favRecipes = useSelector(store => store.favRecipes);
 
     return !user?(<div className='flex justify-center mx-5 mt-[50%] lg:mt-[20%] lg:text-3xl min-h-screen'>
-        <h1>To Save/See Your Favourites Recipes First <Link to={"/authentication"} className='font-bold'>Login/Signup</Link></h1>
+        <h1>To Save/See Your Favourites Recipes First <Link to={"/login"} className='font-bold'>Login/Signup</Link></h1>
         </div> ) : (favRecipes.length===0 ? <div className='flex justify-center mx-5 mt-[50%] lg:mt-[20%] lg:text-3xl font-bold min-h-screen'>
             <h1>No Favourite Recipes</h1>
         </div> 

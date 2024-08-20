@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { filterSearch } from "../services/apis";
 
-const Filter = ({ searchInput,setIsFilterModalVisible,setLoading,setIsResultEmpty }) => {
+const Filter = ({ searchInput,setIsFilterModalVisible,setLoading }) => {
 
     const [showSortOptions,setShowSortOptions] = useState(false);
     const [sortOption,setSortOption] = useState("Select");
@@ -132,7 +132,7 @@ const Filter = ({ searchInput,setIsFilterModalVisible,setLoading,setIsResultEmpt
             try{
                 const result = await filterSearch(searchInput,filterInput,dispatch);
                 if(!result){
-                    setIsResultEmpty(true);
+                    // setIsResultEmpty(true);
                 }
             }
             catch(error){

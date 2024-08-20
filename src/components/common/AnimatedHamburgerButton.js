@@ -5,15 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { FaFacebookSquare, FaGithub, FaInstagramSquare } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-import { signOut } from "firebase/auth";
-import { auth } from "../../utils/firebase";
 
 const AnimatedHamburgerButton = () => {
 
   const user = useSelector(store => store.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [confirmationalModal,setConfirmationalModal] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
 
   let options = [{name:'Home',to:'/'},{name:'About Us',to:'/about-us'},{name:'Explore',to:'/explore'},{name:'Add Canteen',to:'/add-canteen'}];
@@ -45,13 +42,6 @@ const AnimatedHamburgerButton = () => {
   }
 
   const handleLogOut = () =>{
-    signOut(auth)
-    .then(() => {
-        // Sign-out successful.
-    })
-    .catch((error) => {
-        // An error happened.
-    });
   };
 
   return (
