@@ -5,28 +5,30 @@ import Shimmer from "./common/Shimmer";
 import { MdClear } from "react-icons/md";
 import { searchItemsByIngredients } from "../services/apis";
 import { useDispatch, useSelector } from "react-redux";
-import { removeRecipeByIngredients } from "../utils/recipeSlice";
+import { setIngredients } from "../utils/searchSlice";
 
 const Ingredients = () => {
-    const [searchInput,setSearchInput] = useState(''); 
+
+    const ingredients = useSelector(store => store.search.ingredients);
+    const {searchInput,result,showResults,isResultEmpty} = ingredients;
     const [loading,setLoading] = useState(false);
-    const [showSearchResults,setShowSearchResults] = useState(false);
-    const [isResultEmpty,setIsResultEmpty] = useState(false);
     const dispatch = useDispatch();
-    const recipes = useSelector(store => store.recipes.ingredients);
 
     const handleSearchInput = (value)=>{
-        setSearchInput(value);
+        dispatch(setIngredients({searchInput:value}));
     }
 
     const handleSearch = async()=>{  
         if(searchInput==='')    return;
-        setShowSearchResults(true);
+        dispatch(setIngredients({showResults:true}));
         setLoading(true);
         try{
             const result = await searchItemsByIngredients(searchInput,dispatch);
             if(!result){
-                setIsResultEmpty(true);
+                dispatch(setIngredients({isResultEmpty:true}));
+            }
+            else{
+                dispatch(setIngredients({isResultEmpty:false}));
             }
         }
         catch(error){
@@ -38,9 +40,7 @@ const Ingredients = () => {
     }
 
     const handleClearAllBtn = ()=>{
-        dispatch(removeRecipeByIngredients());
-        setSearchInput('');
-        setShowSearchResults(false);
+        dispatch(setIngredients({searchInput:'',result:[],showResults:false,isResultEmpty:false}));
     }
 
     return (
@@ -50,16 +50,19 @@ const Ingredients = () => {
                 className="w-full sm:py-3 p-2 sm:px-6 text-xs sm:text-base rounded-full h-14  border-2 border-gray-500 focus:outline-none focus:border-[#41C9E2] focus:shadow-outline focus:shadow-[#41C9E2] shadow-gray-700 shadow-md"
                 onChange={(e)=>{handleSearchInput(e.target.value)}} value={searchInput}/>
                 <div className="absolute right-4 mt-2.5 lg:mt-4 cursor-pointer">
-                    {showSearchResults ? <MdClear className="Logos" onClick={handleClearAllBtn}/>
+                    {showResults ? <MdClear className="Logos" onClick={handleClearAllBtn}/>
                     : <FaSearch className="Logos" onClick={handleSearch}/>}
                 </div>
             </div>
-            {showSearchResults && (loading ? <div className="w-full">
+            {showResults && (loading ? <div className="w-[90%] mt-10">
                 <Shimmer type={"SearchPage"}/>
             </div>
             : <div className="flex flex-wrap justify-center mt-10 sm:mt-14 lg:mt-6">
                 {isResultEmpty ? <h1 className="uppercase text-2xl font-semibold tracking-widest mt-[50%]">No Dishes Found</h1>
-                :recipes.map((recipe)=><RecipeCard recipe={recipe}/>)}
+                :<div className="grid grid-cols-3 w-[90%] mt-10 sm:mt-14 lg:mt-10">
+                    {isResultEmpty ? <h1 className="col-span-full uppercase text-2xl mt-24 font-semibold tracking-widest text-center">No Dishes Found</h1>
+                    : result.map((recipe)=><div className="col-span-full sm:col-span-1"><RecipeCard recipe={recipe}/></div>)}
+                </div>}
             </div>)}
         </div>
     )

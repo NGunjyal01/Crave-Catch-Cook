@@ -12,22 +12,24 @@ import RecipePage from './components/RecipePage';
 import Favourites from './components/Favourites';
 import { Toaster } from 'react-hot-toast';
 import Recipes from './components/Recipes';
-import Authentication from './components/Auth/Authentication';
+import SignUp from './components/Auth/SignUp';
+import Login from './components/Auth/Login';
 
 function App() {
 
   const appRouter = createBrowserRouter(
     createRoutesFromElements(
       <Route path='/' element={<Body/>}>
-        <Route path='' element={<Home/>}/>
+        <Route index element={<Home/>}/>
+        <Route path='signup' element={<SignUp/>}/>
+        <Route path='login' element={<Login/>}/>
         <Route path='/recipes' element={<Recipes/>}>
-          <Route path='' element={<DishName/>}/>
+          <Route index element={<DishName/>}/>
           <Route path='ingredients' element={<Ingredients/>}/>
           <Route path='nutrients' element={<Nutrients/>}/>
         </Route>
         <Route path='recipe/:id' element={<RecipePage/>}/>
         <Route path='favourites' element={<Favourites/>}/>
-        <Route path='authentication' element={<Authentication/>}/>
         <Route path='yourAccount' element={<YourAccount/>}/>
       </Route>
     )

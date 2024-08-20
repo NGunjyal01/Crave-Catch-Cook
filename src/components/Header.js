@@ -1,83 +1,34 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { RxHamburgerMenu } from "react-icons/rx";
-import { useEffect, useState } from "react";
-import SideMenu from "./SideMenu";
-import { addUser,removeUser } from "../utils/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import {auth}  from "../utils/firebase";
-import { onAuthStateChanged, signOut } from "firebase/auth";
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 import AnimatedHamburgerButton from "./common/AnimatedHamburgerButton";
+import { logout } from "../services/authAPI";
 
 const Header = () => {
 
-    const [isSideMenuOpen,setIsSideMenuOpen] = useState(false);
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const user = useSelector(store => store.user.userInfo);
+  const user = useSelector(store => store.user.userInfo);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    const handleSideMenuClick = ()=>{
-        setIsSideMenuOpen(true);
-    };
-    
-    const handleSignOut = () => {
-      signOut(auth)
-      .then(() => {
-          // Sign-out successful.
-      })
-      .catch((error) => {
-          // An error happened.
-      });
-    };
+  const handleLogOut = () => {
+    logout(dispatch,navigate);
+  };
 
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-          if(user) {
-            const { uid, email, displayName, phoneNumber, photoURL } = user;
-            dispatch(
-              addUser({
-                uid: uid,
-                email: email,
-                displayName: displayName,
-                phoneNumber: phoneNumber,
-                photoURL: photoURL,
-              })
-            );
-            const db = getFirestore();
-            const docRef = doc(db, "Users",uid);
-            getDoc(docRef).then((docSnap)=>{
-              if(!docSnap.exists()){
-                // docSnap.data() will be undefined in this case
-                setDoc(docRef,{
-                  favRecipes:[]
-                });
-                // console.log("new doc created")
-              }
-            })
-            navigate("/");
-          } else {
-            // User is signed out
-            dispatch(removeUser());
-            navigate("/");
-          }
-        });
-    
-        return () => unsubscribe();
-    }, []);
 
     return (
       <>
         <div className="fixed top-0 w-full z-40 flex bg-[#ACE2E1] text-gray-800 py-5 sm:pt-10 sm:pb-5">
           <h1 className="ml-[30%] sm:ml-[5%] sm:text-lg lg:text-2xl font-bold font-serif whitespace-nowrap">Crave Catch Cook</h1>
-          <div className="ml-[20%] hidden lg:flex lg:space-x-4 mr-7 sm:text-sm lg:text-lg">
+          <div className="ml-[20%] hidden lg:flex lg:space-x-4 mr-7 sm:text-sm lg:text-lg whitespace-nowrap">
             <NavLink to={"/"}>Home</NavLink>
             <NavLink to={"/recipes"}>Recipes</NavLink>
             <NavLink to={"/favourites"}>Favourites</NavLink>
             <NavLink to={"/yourAccount"}>Your Account</NavLink>
           </div>
-          <RxHamburgerMenu className="lg:hidden ml-[45%] sm:ml-[70%]" onClick={handleSideMenuClick} size={20}/>
-          {!user && <Link to={"/authentication"} className="hidden lg:block ml-[25%] sm:text-sm lg:text-lg">Login/SignUp</Link>}
-          {user && <button onClick={handleSignOut} className="hidden lg:block ml-[25%] sm:text-sm lg:text-lg">Signout</button>}
+          {!user && <div className="hidden lg:flex gap-3 ml-[25%] sm:text-sm lg:text-lg">
+            <Link to={"/login"} className="">Login</Link>
+            <Link to={"/signup"} className="">SignUp</Link>
+          </div>}
+          {user && <button onClick={handleLogOut} className="hidden lg:block ml-[25%] sm:text-sm lg:text-lg">LogOut</button>}
         </div>
         <AnimatedHamburgerButton/>
       </>

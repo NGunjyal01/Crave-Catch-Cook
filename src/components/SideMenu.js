@@ -42,7 +42,7 @@ const SideMenu = ({setIsSideMenuOpen}) => {
             <NavLink to={"/recipes"} onClick={handleCloseBtn}>Recipes</NavLink>
             <NavLink to={"/favourites"} onClick={handleCloseBtn}>Favourites</NavLink>
             <NavLink to={"/yourAccount"} onClick={handleCloseBtn}>Your Account</NavLink>
-            {!user && <NavLink to={"/authentication"} onClick={handleCloseBtn}>Login/SignUp</NavLink>}
+            {!user && <NavLink to={"/login"} onClick={handleCloseBtn}>Login/SignUp</NavLink>}
             {user && <button onClick={handleSignOut}>SignOut</button>}
         </div>
     </div>

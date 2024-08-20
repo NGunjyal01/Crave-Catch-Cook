@@ -1,8 +1,8 @@
 import toast from "react-hot-toast";
 import { API_KEY } from "../utils/constants";
-import { addRandomRecipes, addRecipeByDishName, addRecipeByIngredients, setRecipeInfo, setSimilarRecipes } from "../utils/recipeSlice";
+import { addRandomRecipes, setRecipeInfo, setSimilarRecipes } from "../utils/recipeSlice";
 import { setApiLimitExceed } from "../utils/userSlice";
-import SimilarRecipes from "../components/SimilarRecipes";
+import { setDishName, setIngredients } from "../utils/searchSlice";
 
 export async function getRandomRecipes(dispatch){
     try{
@@ -42,11 +42,13 @@ export async function searchItemsByDishName(searchInput,dispatch){
             dispatch(setApiLimitExceed(true));
         }
         console.log("SEARCH RESULT................",json);
-        dispatch(addRecipeByDishName(json.results));
         if(json.totalResults===0){
             return false;
         }
-        return true;
+        else{
+            dispatch(setDishName({result:json.results}));
+            return true;
+        }
     }
     catch(error){
         console.log("ERROR DURING SEARCH ITEMS BY DISH NAME............",error);
@@ -62,7 +64,7 @@ export async function filterSearch(searchInput,filterInput,dispatch){
             dispatch(setApiLimitExceed(true));
         }
         console.log("SEARCH RESULT................",json);
-        dispatch(addRecipeByDishName(json.results));
+        dispatch(setDishName({result:json.results}));
         if(json.totalResults===0){
             return false;
         }
@@ -88,7 +90,7 @@ export async function searchItemsByIngredients(searchInput,dispatch){
             dispatch(setApiLimitExceed(true));
         }
         console.log("SEARCH ITEMS BY INGREDIENTS API RESPONSE.................",json2);
-        dispatch(addRecipeByIngredients(json2));
+        dispatch(setIngredients({result:json2}));
         return true;
     }
     catch(error){

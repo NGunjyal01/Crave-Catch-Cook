@@ -37,6 +37,9 @@ const RecipePage = () => {
                 console.log('loading new page..............................',loading);
             });
         }
+        else{
+            setLoading(false);
+        }
 
         return()=>{
             dispatch(removeRecipeInfo());
@@ -60,7 +63,7 @@ const RecipePage = () => {
         summary = '',
         analyzedInstructions = [],
         spoonacularSourceUrl = ''
-    } = recipeInfo || {}; // Add default empty object
+    } = recipeInfo; // Add default empty object
 
     // Safely access the nutrients array
     const nutrients = recipeInfo?.nutrition?.nutrients || [];
